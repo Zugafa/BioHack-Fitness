@@ -12,7 +12,6 @@
 - **SEO Ready**: Integrarea strategică a 10 cuvinte cheie și meta-tag-uri relevante.
 - **Bonusuri Implementate**:
   - Algoritmi biometrici scriși în **MathML**.
-  - Hartă interactivă a sălii (**Image Map**).
   - Integrare **Google Maps Iframe**.
   - Documentație PDF încorporată.
 
