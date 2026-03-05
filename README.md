@@ -1,7 +1,5 @@
 # BioHack Fitness | Optimize Your Biology
 
-[![FMI Logo](https://fmi.unibuc.ro/wp-content/uploads/2021/10/logo_fmi_mic.png)](https://fmi.unibuc.ro/)
-
 **BioHack Fitness** este un proiect de tip „commercial website” dezvoltat pentru materia **Tehnici WEB**, în cadrul **Facultății de Matematică și Informatică, Universitatea din București**. Conceptul se bazează pe un centru de recompoziție corporală cu estetică cyberpunk și underground.
 
 ## 🧬 Concept & Obiective
