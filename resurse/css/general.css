@@ -1,0 +1,508 @@
+:root {
+    --culoare-fundal: #0a0a0a;
+    --neon-blue: #00e5ff;
+    --neon-magenta: #ff00ff;
+    --text-principal: #e0e0e0;
+    --text-glow: 0 0 8px var(--neon-blue);
+    --gap-grid: 25px;
+    --neon-blue-rgb: 0, 229, 255;
+    --neon-magenta-rgb: 255, 0, 255;
+    --culoare-fundal-rgb: 10, 10, 10;
+    --bg-header: #121212;
+    --teal-inchis: #00454d;
+    --padding-zona: 20px;
+    --margine-pagina: 25px;
+
+}
+
+body {
+    background-color: var(--culoare-fundal);
+    color: var(--text-principal);
+    margin: 0;
+    /*nu exista margini secundare */
+    line-height: 1.6;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 14px;
+}
+
+p {
+    border: 1px solid var(--culoare-fundal)
+}
+
+h1,
+h2,
+h3 {
+    color: var(--neon-blue);
+    text-shadow: var(--text-glow);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+b,
+strong,
+i,
+em {
+    color: var(--neon-magenta);
+}
+
+q {
+    font-style: italic;
+    color: var(--neon-blue);
+    border-left: 3px solid var(--neon-magenta);
+    padding-left: 10px;
+}
+
+cite {
+    font-weight: bold;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+header,
+main,
+footer {
+    padding: var(--padding-zona) var(--margine-pagina);
+}
+
+header {
+    background-color: var(--bg-header);
+    border: 2px solid var(--neon-magenta);
+    border-top: none;
+    border-radius: 0 0 20px 20px;
+    box-shadow: 0 -5px 20px rgba(var(--neon-magenta-rgb), 0.2);
+    margin: 0 var(--margine-pagina);
+}
+
+
+#grid-pagina {
+    display: grid;
+    gap: var(--gap-grid);
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-areas:
+        "welcome welcome welcome welcome"
+        "system-alerts access-matrix access-matrix visual-feed"
+        "system-status system-status faq-database biometrics"
+        "regulations-node regulations-node regulations-node regulations-node";
+}
+
+#welcome {
+    grid-area: welcome;
+}
+
+#system-alerts {
+    grid-area: system-alerts;
+}
+
+#visual-feed {
+    grid-area: visual-feed;
+}
+
+#visual-feed img {
+    width: 100%;
+    max-width: 800px;
+    min-width: 150px;
+    height: auto;
+    background-color: rgba(var(--neon-blue-rgb), 0.03);
+
+}
+
+/* container-iframe comasat în #visual-feed — nu mai are grid-area propriu */
+/* linkuri-utile comasat în #faq-database — nu mai are grid-area propriu */
+
+#faq-database {
+    grid-area: faq-database;
+    background-color: rgba(var(--neon-blue-rgb), 0.03);
+
+}
+
+#system-status {
+    grid-area: system-status;
+    background-color: rgba(var(--neon-blue-rgb), 0.03);
+}
+
+#biometrics {
+    grid-area: biometrics;
+    border-color: var(--neon-magenta) !important;
+}
+
+#regulations-node {
+    grid-area: regulations-node;
+}
+
+#regulations-node embed {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1200px;
+    min-width: 300px;
+    height: auto;
+    min-height: 900px;
+}
+
+#grid-pagina>* {
+    background-color: rgba(var(--culoare-fundal-rgb), 0.031);
+    border: 1px solid var(--neon-blue);
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(var(--neon-blue-rgb), 0.1);
+    padding: var(--padding-zona);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#grid-pagina>*:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(var(--neon-blue-rgb), 0.4);
+    background-color: rgba(var(--culoare-fundal-rgb), 0.05);
+}
+
+#system-alerts {
+    border-color: var(--neon-blue);
+    box-shadow: 0 0 15px rgba(var(--neon-magenta-rgb), 0.2);
+    background-color: rgba(var(--neon-magenta-rgb), 0.02);
+}
+
+#access-matrix {
+    grid-area: access-matrix;
+    border-color: var(--neon-magenta);
+    min-width: 0;
+    /* width: fit-content; */
+    overflow: auto;
+}
+
+footer {
+    background-color: var(--culoare-fundal);
+    border: 2px solid var(--neon-magenta);
+    border-bottom: none;
+    border-radius: 20px 20px 0;
+    box-shadow: 0 -5px 20px rgba(var(--neon-magenta-rgb), 0.2);
+    margin: 0 var(--margine-pagina);
+
+}
+
+footer iframe {
+    width: 100%;
+    max-width: 450px;
+    min-width: 100px;
+    height: 250px;
+}
+
+figure.fg-img>img {
+    width: 100%;
+}
+
+@media screen and (max-width:1200px) {
+    body {
+        --margine-pagina: 15px;
+    }
+
+    #grid-pagina {
+        gap: 15px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "welcome          welcome"
+            "system-alerts    visual-feed"
+            "access-matrix    access-matrix"
+            "system-status    system-status"
+            "biometrics       faq-database"
+            "regulations-node regulations-node";
+    }
+
+    .container-iframe iframe {
+        max-width: 100%;
+        min-width: 200px;
+    }
+
+    #visual-feed img {
+        max-width: 100%;
+        min-width: 120px;
+    }
+
+    #regulations-node embed {
+        max-width: 100%;
+        min-width: 250px;
+        min-height: 700px;
+    }
+
+    footer iframe {
+        max-width: 100%;
+        min-width: 80px;
+    }
+}
+
+@media screen and (max-width:700px) {
+    body {
+        --margine-pagina: 7px;
+    }
+
+    #grid-pagina {
+        gap: 8px;
+        display: block;
+    }
+
+    .container-iframe {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .taburi-iframe {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    #visual-feed img {
+        max-width: 100%;
+        min-width: 80px;
+    }
+
+    .container-iframe iframe {
+        max-width: 100%;
+        min-width: 150px;
+    }
+
+    #regulations-node embed {
+        max-width: 100%;
+        min-width: 200px;
+        min-height: 500px;
+    }
+
+    footer iframe {
+        max-width: 100%;
+        min-width: 60px;
+    }
+}
+
+.container-iframe {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.taburi-iframe {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    box-sizing: border-box;
+    gap: 8px;
+    /* distanță între taburi */
+    border: none;
+}
+
+.taburi-iframe>a {
+    display: block;
+    flex: 1;
+    text-align: center;
+    padding: 8px 20px;
+    background-color: var(--culoare-fundal);
+    border: none;
+    /* fără border */
+    border-radius: 6px;
+    border-bottom-left-radius: 0%;
+    border-bottom-right-radius: 0%;
+    color: var(--text-principal);
+    text-decoration: none;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    outline: none;
+    box-shadow: 0 0 8px rgba(var(--neon-blue-rgb), 0.4);
+    /* shadow neon */
+    white-space: nowrap;
+}
+
+
+.taburi-iframe>a:hover {
+    background-color: rgba(var(--neon-blue-rgb), 0.2);
+    color: var(--neon-blue);
+    box-shadow: 0 0 15px rgba(var(--neon-blue-rgb), 0.8);
+    /* shadow mai intens la hover */
+}
+
+.container-iframe iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    border: 1px solid var(--neon-blue);
+    box-sizing: border-box;
+}
+
+.tabel-scroll {
+    overflow-x: auto;
+}
+
+#tabel-preturi {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 480px;
+}
+
+#tabel-preturi caption {
+    caption-side: bottom;
+    color: var(--neon-blue);
+    font-style: italic;
+    padding-top: 8px;
+    font-size: 0.85em;
+    opacity: 0.7;
+}
+
+#tabel-preturi td,
+#tabel-preturi th {
+    border: 1px solid var(--neon-blue);
+    padding: 8px 12px;
+    text-align: center;
+}
+
+
+/* Coloane impare — border-right magenta */
+#tabel-preturi td:nth-child(odd),
+#tabel-preturi th:nth-child(odd) {
+    border-right-color: var(--neon-magenta);
+}
+
+/* Coloane pare — border-right albastru */
+#tabel-preturi td:nth-child(even),
+#tabel-preturi th:nth-child(even) {
+    border-right-color: var(--neon-blue);
+}
+
+/* Exterior dreapta rămâne albastru */
+#tabel-preturi td:last-child,
+#tabel-preturi th:last-child {
+    border-right-color: var(--neon-blue);
+}
+
+/* Celula cu rowspan */
+#tabel-preturi td[rowspan] {
+    border-left-color: var(--neon-magenta);
+    border-right-color: var(--neon-blue);
+}
+
+
+/* Randul Specimen Zero — celula a 2-a e vizual col3 => border-right magenta */
+#tabel-preturi tr:has(> td:nth-child(3):last-child) td:nth-child(2) {
+    border-right-color: var(--neon-magenta);
+}
+
+/* Randul Specimen Zero — celula a 3-a e vizual col4 => border-right albastru */
+#tabel-preturi tr:has(> td:nth-child(3):last-child) td:nth-child(3) {
+    border-right-color: var(--neon-blue);
+}
+
+/* Border gros între thead si tbody */
+#tabel-preturi thead tr:last-child th {
+    border-bottom: 3px solid var(--neon-blue);
+}
+
+/* Border gros între tbody si tfoot */
+#tabel-preturi tbody tr:last-child td {
+    border-bottom: 3px solid var(--neon-blue);
+}
+
+#tabel-preturi thead th {
+    background-color: rgba(var(--neon-blue-rgb), 0.1);
+    color: var(--neon-blue);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Hover */
+
+#tabel-preturi tbody tr {
+    transition: box-shadow 0.5s ease;
+    position: relative;
+}
+
+#tabel-preturi tbody tr:hover {
+    box-shadow: inset 0 0 15px 5px var(--neon-blue);
+    cursor: crosshair;
+}
+
+#tabel-preturi tfoot td {
+    color: var(--neon-magenta);
+    font-style: italic;
+}
+
+
+/* Z1 - welcome */
+#welcome {
+    background: linear-gradient(135deg, rgba(var(--neon-blue-rgb), 0.04) 0%, rgba(var(--neon-magenta-rgb), 0.03) 100%) !important;
+    border-color: var(--neon-blue) !important;
+    box-shadow: 0 0 30px rgba(var(--neon-blue-rgb), 0.15) !important;
+}
+
+#welcome hgroup h2 {
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+#welcome nav a {
+    color: var(--neon-blue);
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.2s;
+}
+
+#welcome nav a:hover {
+    color: var(--neon-magenta);
+    text-shadow: 0 0 10px var(--neon-magenta);
+}
+
+/* separator vizual între manifest și concept în interiorul Z1 */
+#welcome hr.separator-concept {
+    border: none;
+    border-top: 1px solid rgba(var(--neon-blue-rgb), 0.2);
+    margin: 20px 0;
+}
+
+/* Z8: Regulations*/
+#regulations-node {
+    box-shadow: 0 0 15px rgba(var(--neon-magenta-rgb), 0.15) !important;
+    background-color: rgba(var(--neon-magenta-rgb), 0.02) !important;
+}
+
+.formula-container {
+    background-color: rgba(var(--neon-blue-rgb), 0.05);
+    border: 1px solid var(--neon-blue);
+    border-radius: 8px;
+    padding: calc(var(--padding-zona) - 5px);
+    margin: calc(var(--margine-pagina) - 10px) 0;
+}
+
+#link-top {
+    position: fixed;
+    bottom: 1em;
+    right: 1em;
+    width: 3.5rem;
+    height: 3.5rem;
+    opacity: 0.5;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#link-top:hover {
+    opacity: 1;
+}
+
+#cerc-rotativ {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 3px dashed var(--neon-blue);
+    background: linear-gradient(135deg, var(--culoare-fundal), var(--teal-inchis), var(--culoare-fundal));
+    box-sizing: border-box;
+    transition: transform 0.5s ease;
+}
+
+#link-top:hover #cerc-rotativ {
+    transform: rotate(90deg);
+}
+
+#sageata {
+    position: relative;
+    /* deasupra cercului */
+    z-index: 1;
+    color: var(--neon-blue);
+    font-size: 1.5rem;
+    line-height: 1;
+    text-shadow: var(--text-glow);
+}

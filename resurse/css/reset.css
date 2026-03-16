@@ -1,0 +1,301 @@
+/* RESET CSS Toate elementele (mai puțin html/body) */
+
+/* 1. Box model universal */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* 2. html și body — singurele cu unități fixe */
+html {
+    font-size: 16px;
+    line-height: 1;
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* 3. Elemente block semantice */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+    display: block;
+}
+
+/* 4. Text — unități relative */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-size: 1em;
+    font-weight: bold;
+    line-height: 1.2;
+    margin: 0;
+}
+
+p,
+blockquote,
+pre,
+ul,
+ol,
+dl,
+dd,
+dt,
+address,
+cite,
+q {
+    font-size: 1em;
+    line-height: inherit;
+    margin: 0;
+    padding: 0;
+}
+
+/* 5. Bold și italic resetate */
+b,
+strong {
+    font-weight: bolder;
+    font-style: normal;
+}
+
+i,
+em,
+dfn {
+    font-style: italic;
+    font-weight: normal;
+}
+
+small {
+    font-size: 0.8em;
+}
+
+sub,
+sup {
+    font-size: 0.75em;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+
+sub {
+    bottom: -0.25em;
+}
+
+sup {
+    top: -0.5em;
+}
+
+/* 6. Liste */
+ul,
+ol {
+    list-style: none;
+    padding-left: 0;
+}
+
+li {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+/* 7. Linkuri */
+a {
+    color: inherit;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+a:active,
+a:hover {
+    outline-width: 0;
+}
+
+/* 8. Media */
+img,
+video,
+audio,
+iframe,
+embed,
+object {
+    max-width: 100%;
+    height: auto;
+    border: 0;
+    vertical-align: middle;
+}
+
+figure {
+    margin: 0;
+}
+
+figcaption {
+    font-size: 0.85em;
+    line-height: 1.4;
+}
+
+/* 9. Tabele */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+}
+
+th,
+td {
+    padding: 0;
+    text-align: left;
+    vertical-align: top;
+    font-weight: normal;
+}
+
+caption {
+    caption-side: bottom;
+    text-align: center;
+    font-size: 0.85em;
+}
+
+/* 10. Formulare */
+button,
+input,
+optgroup,
+select,
+textarea {
+    font-family: inherit;
+    font-size: 1em;
+    line-height: inherit;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+}
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+    cursor: pointer;
+    appearance: button;
+    -webkit-appearance: button;
+}
+
+textarea {
+    overflow: auto;
+    resize: vertical;
+}
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+}
+
+legend {
+    padding: 0;
+    display: block;
+    font-size: 1em;
+}
+
+/* 11. Elemente interactive */
+details {
+    display: block;
+}
+
+summary {
+    display: list-item;
+    cursor: pointer;
+}
+
+/* 13. Indici de listă — redefinire cu variabile */
+ul.lista-bullet {
+    list-style: none;
+    padding-left: 1.2em;
+}
+
+ul.lista-bullet>li::before {
+    content: "▸";
+    color: var(--neon-blue);
+    font-size: 0.8em;
+    margin-left: -1.2em;
+    margin-right: 0.4em;
+}
+
+ol.lista-numerica {
+    list-style: none;
+    counter-reset: biohack-counter;
+    padding-left: 1.5em;
+}
+
+ol.lista-numerica>li {
+    counter-increment: biohack-counter;
+}
+
+ol.lista-numerica>li::before {
+    content: counter(biohack-counter) ".";
+    color: var(--neon-magenta);
+    font-size: 0.85em;
+    margin-left: -1.5em;
+    margin-right: 0.4em;
+}
+
+/* 14. Elemente ascunse */
+[hidden],
+template {
+    display: none;
+}
+
+/* 15. Selectie text */
+::selection {
+    background-color: rgba(var(--neon-blue-rgb), 0.3);
+    color: var(--text-principal);
+}
+
+::-moz-selection {
+    background-color: rgba(var(--neon-blue-rgb), 0.3);
+    color: var(--text-principal);
+}
+
+/* 16. Scrollbar custom */
+::-webkit-scrollbar {
+    width: 0.4em;
+    height: 0.4em;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--culoare-fundal);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--neon-blue);
+    border-radius: 0.2em;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--neon-magenta);
+}
+
+/* 17. Focus vizibil accesibil */
+:focus-visible {
+    outline: 0.125em solid var(--neon-blue);
+    outline-offset: 0.125em;
+}
