@@ -168,6 +168,10 @@ header {
     overflow: auto;
 }
 
+#access-matrix td[rowspan] {
+    vertical-align: middle;
+}
+
 footer {
     background-color: var(--culoare-fundal);
     border: 2px solid var(--neon-magenta);
@@ -505,4 +509,79 @@ figure.fg-img>img {
     font-size: 1.5rem;
     line-height: 1;
     text-shadow: var(--text-glow);
+}
+
+/* stilizare mathml
+/*dimensiune formulă*/
+.formula-container math {
+    font-size: 1.4em;
+}
+
+/*toate <mi>*/
+.formula-container mi {
+    color: #ffd700;
+    font-style: italic;
+    font-weight: bold;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+}
+
+/*FFMI*/
+.formula-container msub > mi:first-child {
+    color: var(--neon-blue);
+    font-weight: bold;
+    font-style: normal;
+    text-shadow: 0 0 8px var(--neon-blue);
+}
+
+/*norm*/
+.formula-container msub > mtext {
+    color: var(--neon-magenta);
+    font-size: 0.75em;
+    font-style: italic;
+    text-shadow: 0 0 6px var(--neon-magenta);
+}
+
+/*m*/
+.formula-container mfrac > mrow > mi:first-child {
+    color: var(--neon-blue);
+    font-style: italic;
+    font-weight: bold;
+    text-shadow: 0 0 6px rgba(0, 229, 255, 0.7);
+}
+
+/*BF*/
+.formula-container mfrac > mrow > mi:not(:first-child) {
+    color: var(--neon-magenta);
+    font-style: italic;
+    font-weight: bold;
+    text-shadow: 0 0 6px rgba(255, 0, 255, 0.7);
+}
+
+/*H*/
+.formula-container mfrac > msup > mi {
+    color: #ffd700;
+    font-weight: bold;
+    font-style: normal; 
+    font-size: 1.05em;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+}
+
+/*constantele numerice <mn>*/
+.formula-container mn {
+    color: #39ff14;
+    font-weight: bold;
+    text-shadow: 0 0 6px rgba(57, 255, 20, 0.5);
+}
+
+/*2 din H^2*/
+.formula-container msup > mn {
+    color: #ffd700;
+    font-size: 0.8em;
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+}
+
+/*operatori <mo>    */
+.formula-container mo {
+    color: rgba(224, 224, 224, 0.75);
+    font-size: 1em;
 }
