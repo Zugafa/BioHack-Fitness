@@ -13,6 +13,22 @@
     --padding-zona: 20px;
     --margine-pagina: 25px;
 
+    /* variabile pentru nav */
+     --culoare-nav-bara:      var(--neon-blue);
+    --culoare-item-fundal:   var(--culoare-fundal);
+    --culoare-item-hover:    var(--neon-magenta);
+    --culoare-submeniu-top:  var(--neon-magenta);
+    --culoare-jack-border:   var(--neon-magenta);
+    --culoare-jack-hover:    var(--neon-magenta);
+    --culoare-text-submeniu: var(--text-principal);
+    --fs-nav-normal:         1em;
+    --fs-nav-hover:          1.15em;
+    --fs-item-normal:        0.85em;
+    --fs-item-hover:         0.95em;
+    --shadow-nav:            0 0 15px rgba(var(--neon-blue-rgb), 0.5);
+    --shadow-submeniu:       0 8px 24px rgba(0, 0, 0, 0.8), 0 0 12px rgba(var(--neon-blue-rgb), 0.3);
+    --shadow-jack-hover:     0 0 15px rgba(var(--neon-magenta-rgb), 0.5);
+
 }
 
 body {
@@ -355,25 +371,25 @@ figure.fg-img>img {
 }
 
 
-/* Coloane impare — border-right magenta */
+/*col impare*/
 #tabel-preturi td:nth-child(odd),
 #tabel-preturi th:nth-child(odd) {
     border-right-color: var(--neon-magenta);
 }
 
-/* Coloane pare — border-right albastru */
+/*col pare*/
 #tabel-preturi td:nth-child(even),
 #tabel-preturi th:nth-child(even) {
     border-right-color: var(--neon-blue);
 }
 
-/* Exterior dreapta rămâne albastru */
+/*dreapta ext ramane albastru*/
 #tabel-preturi td:last-child,
 #tabel-preturi th:last-child {
     border-right-color: var(--neon-blue);
 }
 
-/* Celula cu rowspan */
+/*celula cu rowspan */
 #tabel-preturi td[rowspan] {
     border-left-color: var(--neon-magenta);
     border-right-color: var(--neon-blue);
@@ -506,7 +522,7 @@ figure.fg-img>img {
     /* deasupra cercului */
     z-index: 1;
     color: var(--neon-blue);
-    font-size: 1.5rem;
+    font-size: 1.5rem; /*root element=dim parinte*/
     line-height: 1;
     text-shadow: var(--text-glow);
 }

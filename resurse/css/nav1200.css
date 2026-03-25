@@ -1,0 +1,24 @@
+/*ecrane medii (max-width: 1200px)*/
+
+nav {
+    --latime-item: 120px;
+    --latime-submeniu: 190px;
+}
+
+/*textul mai mic pe toti itemii*/
+ul.meniu > li {
+    font-size: 0.85em;
+}
+
+/*toti itemii principali: ascunde textul, arata doar iconita FontAwesome*/
+ul.meniu > li > label .text-icon,
+ul.meniu > li > a .text-icon {
+    display: none;
+}
+
+ul.meniu > li > label .imag-icon,
+ul.meniu > li > a .imag-icon {
+    display: inline-block;
+    font-size: 1.2em;
+    margin-left: 0;
+}

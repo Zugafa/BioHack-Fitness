@@ -1,0 +1,37 @@
+{
+  "name": "biohack-fitness",
+  "version": "1.0.0",
+  "description": "sala de fitness cyberpunk",
+  "homepage": "https://github.com/Zugafa/BioHack-Fitness#readme",
+  "bugs": {
+    "url": "https://github.com/Zugafa/BioHack-Fitness/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zugafa/BioHack-Fitness.git"
+  },
+  "keywords": [
+    "BioHack Fitness",
+    "sală fitness București",
+    "abonament sală",
+    "sală de forță",
+    "recompoziție corporală",
+    "antrenament futuristic",
+    "biohacking România",
+    "hub performanță umană",
+    "sală fitness underground",
+    "upgrade genetic"
+  ],
+  "license": "ISC",
+  "author": "Nițuică Andrei-Sebastian",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "ejs": "^5.0.1",
+    "express": "^5.2.1",
+    "sass": "^1.98.0"
+  }
+}

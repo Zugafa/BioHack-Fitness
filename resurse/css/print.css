@@ -1,0 +1,227 @@
+@media print {
+
+    @page {
+        size: A4;
+    }
+
+    @page :left {
+        margin-left: 2cm;
+        margin-right: 1cm;
+        margin-top: 1.5cm;
+        margin-bottom: 1.5cm;
+    }
+
+    @page :right {
+        margin-left: 1cm;
+        margin-right: 2cm;
+        margin-top: 1.5cm;
+        margin-bottom: 1.5cm;
+    }
+
+    /* reset general pt print */
+    * {
+        background: white !important;
+        color: black !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    /* banner școlar */
+    #banner-scolar {
+        display: block !important;
+        position: fixed;
+        top: 0;
+        opacity: .5;
+        right: 0;
+        /* 50% din lățime minus marginea dreaptă a paginii */
+        width: calc(50% - 1cm);
+        border: 3px double black;
+        padding: 8px 12px;
+        font-weight: bold;
+        font-size: 11pt;
+        text-align: center;
+        background: white !important;
+        color: black !important;
+        z-index: 9999;
+    }
+
+    /* ascund tot ce ține de media */
+    img,
+    video,
+    audio,
+    iframe,
+    embed,
+    object,
+    figure,
+    figcaption,
+    .container-iframe,
+    #visual-feed,
+    #regulations-node,
+    #link-top,
+    #cerc-rotativ,
+    #sageata {
+        display: none !important;
+    }
+
+    /* grid afișat ca block */
+    #grid-pagina {
+        display: block !important;
+    }
+
+    #grid-pagina>* {
+        display: block !important;
+        width: 100% !important;
+        margin-bottom: 20px;
+        page-break-inside: avoid;
+    }
+
+    /* linkuri afișate ca text normal */
+    a,
+    a:visited,
+    a:hover {
+        color: black !important;
+        text-decoration: none !important;
+    }
+
+   /* header */
+    header {
+        text-align: center;
+        border: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    header h1 {
+        display: block;
+        text-align: center;
+        font-size: 22pt;
+        margin-bottom: 20px;
+    }
+
+    nav {
+        background: none !important;
+        box-shadow: none !important;
+        page-break-after: always;
+    }
+
+    /* ascunde elemente interactive ale meniului */
+    #hamburger,
+    #ch-menu,
+    .sub-toggle,
+    .imag-icon {
+        display: none !important;
+    }
+
+    /* meniu principal ca listă neordonată verticală */
+    ul.meniu {
+        display: block !important;
+        list-style: disc !important;
+        padding-left: 20px !important;
+        text-align: left !important;
+        position: static !important;
+        transform: none !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        clip-path: none !important;
+        width: auto !important;
+        background: none !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    ul.meniu>li {
+        display: list-item !important;
+        width: auto !important;
+        height: auto !important;
+        line-height: 1.8 !important;
+        font-size: 12pt !important;
+        border: none !important;
+        text-align: left !important;
+        background: none !important;
+        flex: none !important;
+    }
+
+    ul.meniu>li>label {
+        display: inline !important;
+        padding: 0 !important;
+    }
+
+    ul.meniu>li>label::after {
+        display: none !important;
+    }
+
+    /* submeniuri ca subliste */
+    ul.meniu ul {
+        display: block !important;
+        list-style: circle !important;
+        padding-left: 20px !important;
+        transform: none !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        max-height: none !important;
+        overflow: visible !important;
+        position: static !important;
+        background: none !important;
+        border: none !important;
+    }
+
+    ul.meniu ul>li {
+        display: list-item !important;
+        width: auto !important;
+        height: auto !important;
+        font-size: 11pt !important;
+        border: none !important;
+        overflow: visible !important;
+    }
+
+    ul.meniu ul>li>a {
+        display: inline !important;
+        padding: 0 !important;
+        white-space: normal !important;
+    }
+
+    ul.meniu ul>li::before,
+    ul.meniu ul>li::after {
+        display: none !important;
+    }
+
+    #jack-in {
+        display: list-item !important;
+        border: none !important;
+        color: black !important;
+        margin: 0 !important;
+    }
+
+    /* page break înainte de footer */
+    footer {
+        page-break-before: always;
+        border: none !important;
+        margin: 0 !important;
+    }
+
+    /* watermark */
+    body::after {
+        /* \A = endl, white-space: pre il respecta */
+        content: "Nițuică\A Andrei-Sebastian";
+        white-space: pre;
+        display: block;
+        position: fixed;
+        /* centrat: left 20% + width 60% = ocupă centrul */
+        top: 45%;
+        left: 20%;
+        width: 60%;
+        height: 10vh;
+        font-size: 38pt;
+        font-weight: bold;
+        line-height: 1.2;
+        text-align: center;
+        /* opacitatea setata direct pe culoare, nu pe element */
+        color: rgba(0, 0, 0, 0.3) !important;
+        background: transparent !important;
+        pointer-events: none;
+        z-index: 9998;
+        transform: rotate(-30deg);
+        transform-origin: center center;
+    }
+
+}
