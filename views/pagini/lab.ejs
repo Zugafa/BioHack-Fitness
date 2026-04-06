@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+    <title>BioHack Fitness | The Lab</title>
+    <meta name="keywords"
+        content="BioHack Fitness, the lab, cyber-coaches, bio-analysts, the forge, heart-boosters, echipa, antrenori">
+    <meta name="description"
+        content="The Lab — inima operațională a BioHack Fitness. Cunoaște echipa de Cyber-Coaches, Bio-Analysts și Heart-Boosters care îți monitorizează upgrade-ul biologic.">
+    <%- include("../fragmente/head.ejs") %>
+        <style>
+            #lab-grid {
+                display: grid;
+                gap: 25px;
+                grid-template-columns: 1fr;
+                padding: 0;
+            }
+
+            .lab-zona {
+                background-color: rgba(var(--culoare-fundal-rgb), 0.031);
+                border: 1px solid var(--neon-blue);
+                border-radius: 12px;
+                box-shadow: 0 0 15px rgba(var(--neon-blue-rgb), 0.1);
+                padding: var(--padding-zona);
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+
+            .lab-zona:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 5px 20px rgba(var(--neon-blue-rgb), 0.35);
+            }
+
+            .lab-zona h2 {
+                margin-bottom: 12px;
+            }
+
+            .lab-zona p {
+                margin-bottom: 10px;
+            }
+
+            /* carduri echipa */
+            .echipa-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                gap: 18px;
+                margin-top: 16px;
+            }
+
+            .card-membru {
+                border: 1px solid var(--neon-magenta);
+                border-radius: 8px;
+                padding: 16px;
+                background-color: rgba(var(--neon-magenta-rgb), 0.03);
+                transition: box-shadow 0.2s ease;
+            }
+
+            .card-membru:hover {
+                box-shadow: 0 0 14px rgba(var(--neon-magenta-rgb), 0.4);
+            }
+
+            .card-membru h3 {
+                font-size: 1em;
+                margin-bottom: 6px;
+            }
+
+            .card-membru p {
+                font-size: 0.85em;
+                color: var(--text-principal);
+                opacity: 0.85;
+            }
+
+            /* sectiunea video */
+            #lab-video {
+                border-color: var(--neon-magenta);
+                box-shadow: 0 0 18px rgba(var(--neon-magenta-rgb), 0.2);
+            }
+
+            .video-wrapper {
+                display: flex;
+                justify-content: center;
+                margin-top: 16px;
+            }
+
+            .biohack-video {
+                width: 80%;
+                min-width: 280px;
+                max-width: 860px;
+                aspect-ratio: 16 / 9;
+                /* Forțează containerul la formatul video standard */
+                object-fit: cover;
+                /* Face ca posterul să se întindă perfect pe toată suprafața, la fel ca videoul */
+                display: block;
+                border: 1px solid var(--neon-blue);
+                border-radius: 6px;
+                background-color: #000;
+            }
+
+            /* subtitluri VTT */
+            .biohack-video::cue {
+                background-color: white;
+                color: #0a0a0a;
+                text-align: center;
+            }
+
+            .biohack-video::cue(i) {
+                font-style: italic;
+            }
+
+            @media screen and (max-width: 700px) {
+                .biohack-video {
+                    width: 100%;
+                    min-width: 200px;
+                }
+            }
+        </style>
+</head>
+
+<body>
+    <%- include("../fragmente/header.ejs") %>
+
+        <main>
+            <div id="lab-grid">
+
+                <!-- INTRO -->
+                <section id="forge" class="lab-zona">
+                    <hgroup>
+                        <h2><i class="fa-solid fa-flask-vial"></i> The Lab</h2>
+                        <p>Centrul operațional al BioHack Fitness. Aici știința întâlnește forța brută.</p>
+                    </hgroup>
+                    <p>
+                        <b>The Lab</b> nu este o sală obișnuită — este un <b>ecosistem de performanță umană</b>
+                        construit în jurul tehnologiei de vârf și al obsesiei pentru rezultate măsurabile.
+                        Fiecare sector are un rol precis în protocolul tău de upgrade biologic.
+                    </p>
+                </section>
+
+                <!-- VIDEO SECTIUNEA -->
+                <section id="lab-video" class="lab-zona">
+                    <h2><i class="fa-solid fa-video"></i> Prezentare The Lab</h2>
+                    <p>Urmărește turul complet al facilităților BioHack și descoperă ce te așteaptă în interior.</p>
+
+                    <div class="video-wrapper">
+                        <video class="biohack-video" controls preload="metadata"
+                            poster="/resurse/imagini/protocoale.png">
+                            <!-- preload face ca video-ul să fie încărcat înainte de a fi redat
+                             până la apăsarea play -->
+                            <!--
+                            Surse multiple: același videoclip în formate diferite.
+                            Browserul alege primul format pe care îl suportă.
+                        -->
+                            <source src="/resurse/video/theForge.webm" type="video/webm">
+                            <source src="/resurse/video/theForge.mp4" type="video/mp4">
+
+                            <!--
+                            Track română — default.
+                            Track engleză — alternativă.
+                            Fișierele .vtt sunt servite de Node.
+                        -->
+                            <track kind="subtitles" src="/resurse/video/ro.vtt" srclang="ro" label="Română" default>
+                            <track kind="subtitles" src="/resurse/video/en.vtt" srclang="en" label="English">
+
+                            Browserul tău nu suportă redarea video HTML5.
+                        </video>
+                    </div>
+                </section>
+
+                <!-- THE FORGE -->
+                <section id="forge-sector" class="lab-zona">
+                    <h2><i class="fa-solid fa-hammer"></i> The Forge</h2>
+                    <p>
+                        Sectorul de antrenament greu. Echipamente <b>full-range</b>, bare olimpice,
+                        platforme de ridicare și stații de <i>functional training</i> cu senzori biometrici integrați.
+                        <strong>Sectorul Zero</strong> — zona restricționată pentru protocoalele BioHacker și Specimen
+                        Zero —
+                        se află în centrul The Forge, monitorizat permanent de AI-ul central.
+                    </p>
+                </section>
+
+                <!-- COACHES -->
+                <section id="coaches" class="lab-zona">
+                    <h2><i class="fa-solid fa-brain"></i> Cyber-Coaches</h2>
+                    <p>Antrenorii BioHack nu sunt simpli instructori — sunt <b>arhitecți biologici</b> care
+                        proiectează protocoale personalizate pe baza datelor tale biometrice în timp real.</p>
+                    <div class="echipa-grid">
+                        <div class="card-membru">
+                            <h3>UNIT-01 // Radu Ionescu</h3>
+                            <p>Specializare: Hipertrofie & Recompozitie. Protocol recomandat: Enhanced+.</p>
+                        </div>
+                        <div class="card-membru">
+                            <h3>UNIT-02 // Mihaela Popa</h3>
+                            <p>Specializare: Neural Performance & Mobilitate. Protocol recomandat: Baseline → BioHacker.
+                            </p>
+                        </div>
+                        <div class="card-membru">
+                            <h3>UNIT-03 // Alex Dumitrescu</h3>
+                            <p>Specializare: Forță Maximă & Powerlifting. Protocol recomandat: BioHacker Apex.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ANALYSTS -->
+                <section id="analysts" class="lab-zona">
+                    <h2><i class="fa-solid fa-dna"></i> Bio-Analysts</h2>
+                    <p>Echipa de analiști monitorizează datele biometrice ale tuturor subiecților activi.
+                        Folosesc tehnologie de <b>scanare corporală</b> 3D și algoritmi AI pentru a calibra
+                        fiecare protocol în parte.</p>
+                    <div class="echipa-grid">
+                        <div class="card-membru">
+                            <h3>ANALYST-01 // Dr. Cristina Marin</h3>
+                            <p>Nutriție funcțională & metabolomics. Calculează FFMI și ajustează macronutrienții
+                                săptămânal.</p>
+                        </div>
+                        <div class="card-membru">
+                            <h3>ANALYST-02 // Tudor Niculescu</h3>
+                            <p>Biomecanică & analiza mișcării. Identifică compensările motorii înainte să devină
+                                accidentări.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- BOOSTERS -->
+                <section id="boosters" class="lab-zona">
+                    <h2><i class="fa-solid fa-heart-pulse"></i> Heart-Boosters</h2>
+                    <p>Specialiștii în recuperare și sănătate cardiovasculară. Gestionează sectorul
+                        <b>Recovery Lab</b> — crioterapie, saune infraroșii și terapie prin compresie.
+                    </p>
+                    <div class="echipa-grid">
+                        <div class="card-membru">
+                            <h3>BOOSTER-01 // Andreea Stan</h3>
+                            <p>Crioterapie & terapie manuală. Reduce DOMS și accelerează recuperarea musculară.</p>
+                        </div>
+                        <div class="card-membru">
+                            <h3>BOOSTER-02 // Vlad Coman</h3>
+                            <p>Cardiologie sportivă. Monitorizează HRV și adaptează volumul de antrenament.</p>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+
+        <%- include("../fragmente/footer.ejs") %>
+</body>
+
+</html>

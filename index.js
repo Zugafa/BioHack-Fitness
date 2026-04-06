@@ -20,6 +20,8 @@ console.log("Folder index.js", __dirname);
 console.log("Folder curent (de lucru)", process.cwd());
 console.log("Cale fisier", __filename);
 
+// la pornirea serverului, verific daca exista folderele temp, logs, backup, 
+// fisiere_uploadate, daca nu exista, le creez
 let vect_foldere = ["temp", "logs", "backup", "fisiere_uploadate"]
 for (let folder of vect_foldere) {
     let caleFolder = path.join(__dirname, folder);
@@ -27,26 +29,175 @@ for (let folder of vect_foldere) {
         fs.mkdirSync(caleFolder, { recursive: true });
     }
 }
+
+// setez folderul "resurse" ca folder static, adica pot accesa fisierele din el direct prin url
+// de exemplu, daca am un fisier resurse/imagini/logo.png, pot accesa acest fisier
+// prin url-ul http://localhost:8080/resurse/imagini/logo.png
+// acest lucru este util pentru a putea accesa fisierele css, js, imagini, video, etc. din folderul 
+// resurse
 app.use("/resurse", express.static(path.join(__dirname, "resurse")));
 
 
-
 app.get("/favicon.ico", function (req, res) {
-    res.sendFile(path.join(__dirname, "resurse/imagini/icon.png"));
+    res.sendFile(path.join(__dirname, "resurse/imagini/favicon/favicon.ico"));
 });
 
+// rutele pentru paginile statice
+// daca se acceseaza /, /index sau /home, se afiseaza pagina index.ejs
 app.get(["/", "/index", "/home"], function (req, res) {
     res.render("pagini/index", { ip: req.ip });
 });
 
+// daca se acceseaza /despre, se afiseaza pagina despre.ejs
+// la momentul actual, aceasta pagina nu exista, 
+// |deci se va afisa o pagina de eroare generica, 
+// dar daca se creeaza pagina despre.ejs in folderul pagini, 
+// atunci ea va fi afisata
 app.get("/despre", function (req, res) {
     res.render("pagini/despre");
 });
 
+// daca se acceseaza /lab, se afiseaza pagina lab.ejs
+app.get("/lab", function (req, res) {
+    res.render("pagini/lab");
+});
 
+// bonus erori
+function validareEroriFisierJSON() {
+    const caleFisierErori = path.join(__dirname, "resurse/json/erori.json");
 
+    // 1. Verificare existență fisier erori.json
+    if (!fs.existsSync(caleFisierErori)) {
+        console.error(
+            "EROARE: Fișierul 'erori.json' nu a fost găsit!\n" +
+            `   Cale căutată: ${caleFisierErori}\n` +
+            "   Acțiune necesară: Asigură-te că fișierul erori.json există în folderul 'resurse/json/'.\n" +
+            "   Aplicația va fi închisă."
+        );
+        process.exit(1);
+    }
 
+    // Citire și parsare JSON
+    let continutRaw, erori;
+    try {
+        continutRaw = fs.readFileSync(caleFisierErori, "utf-8");
+        erori = JSON.parse(continutRaw);
+    } catch (err) {
+        console.error(
+            "   EROARE DE PARSARE: Fișierul erori.json conține JSON invalid!\n" +
+            `   Detalii: ${err.message}\n` +
+            "   Acțiune necesară: Verifică sintaxa JSON a fișierului erori.json."
+        );
+        process.exit(1);
+    }
+
+    // 2. Verificare proprietăți info_erori, cale_baza, eroare_default
+    const propietatiBaza = ["info_erori", "cale_baza", "eroare_default"];
+    const propietatilipsete = propietatiBaza.filter(prop => !(prop in erori));
+
+    if (propietatilipsete.length > 0) {
+        console.error(
+            "   EROARE: Lipsesc proprietăți obligatorii la nivel de rădăcină!\n" +
+            `   Proprietăți lipsă: ${propietatilipsete.join(", ")}\n` +
+            `   Proprietăți existente: ${Object.keys(erori).join(", ")}\n` +
+            `   Proprietăți obligatorii: ${propietatiBaza.join(", ")}\n` +
+            "   Acțiune necesară: Adaugă proprietățile lipsă în fișierul erori.json."
+        );
+        process.exit(1);
+    }
+
+    // 3. Verificare proprietăți eroare_default
+    const propietatiEroareDefault = ["titlu", "text", "imagine"];
+    const propietatiLipsaDefault = propietatiEroareDefault.filter(
+        prop => !(prop in erori.eroare_default)
+    );
+
+    if (propietatiLipsaDefault.length > 0) {
+        console.error(
+            "   EROARE: Eroarea default nu are toate proprietățile obligatorii!\n" +
+            `   Proprietăți lipsă: ${propietatiLipsaDefault.join(", ")}\n` +
+            `   Proprietăți existente: ${Object.keys(erori.eroare_default).join(", ")}\n` +
+            `   Proprietăți obligatorii: ${propietatiEroareDefault.join(", ")}\n` +
+            "   Acțiune necesară: Asigură-te că eroarea default are proprietățile: titlu, text, imagine."
+        );
+        process.exit(1);
+    }
+
+    // 4. Verificare existență folder cale_baza
+    const caleBasaAbsoluta = path.join(__dirname, erori.cale_baza);
+    if (!fs.existsSync(caleBasaAbsoluta)) {
+        console.error(
+            "   EROARE: Folderul specificat în 'cale_baza' nu există!\n" +
+            `   Cale de bază (din JSON): ${erori.cale_baza}\n` +
+            `   Cale absolută: ${caleBasaAbsoluta}\n` +
+            "   Acțiune necesară: Creează folderul sau corectează calea în erori.json."
+        );
+        process.exit(1);
+    }
+
+    // Colectare imagini referențiate
+    const imaginiReferentiate = new Set();
+    imaginiReferentiate.add(erori.eroare_default.imagine);
+
+    for (let eroare of erori.info_erori) {
+        if (eroare.imagine) {
+            imaginiReferentiate.add(eroare.imagine);
+        }
+    }
+
+    // 5. Verificare existență fișiere imagine
+    const imaginiLipsate = [];
+    for (let numeFisier of imaginiReferentiate) {
+        const caleAbsoluta = path.join(caleBasaAbsoluta, numeFisier);
+        if (!fs.existsSync(caleAbsoluta)) {
+            imaginiLipsate.push({
+                numeFisier: numeFisier,
+                caleAbsoluta: caleAbsoluta
+            });
+        }
+    }
+
+    if (imaginiLipsate.length > 0) {
+        let mesajEroriImagei = "EROARE: Lipsesc fișierele imagine referențiate!\n";
+        for (let img of imaginiLipsate) {
+            mesajEroriImagei +=
+                `   - ${img.numeFisier}\n` +
+                `     Cale: ${img.caleAbsoluta}\n`;
+        }
+        mesajEroriImagei +=
+            "   Acțiune necesară: Adaugă fișierele imagine în folderul 'resurse/imagini/erori/' sau " +
+            "modifică numele imaginilorîn erori.json pentru a folosi imagini existente.";
+        console.error(mesajEroriImagei);
+        process.exit(1);
+    }
+
+    // 6. Verificare proprietăți duplicate în același obiect, direct pe string-ul JSON brut
+    const propDuplicata = continutRaw.match(/\{[^{}]*"([^"]+)"\s*:[^{}]*"\1"\s*:/s);
+    if (propDuplicata) {
+        console.error(`EROARE: Proprietatea "${propDuplicata[1]}" este specificată de mai multe ori în același obiect din erori.json.`);
+        process.exit(1);
+    }
+
+    // 7. Verificare identificatori duplicați + afișare proprietăți fără "identificator"
+    const grupId = erori.info_erori.reduce((acc, e) => ((acc[e.identificator] ??= []).push(e), acc), {});
+    const dubluri = Object.entries(grupId).filter(([, v]) => v.length > 1);
+    if (dubluri.length) {
+        console.error("EROARE: Există mai multe erori cu același identificator!\n" + dubluri.map(([id, v]) => `   Identificator ${id}:\n` + v.map(e => `     - ${JSON.stringify(Object.fromEntries(Object.entries(e).filter(([k]) => k !== "identificator")))}`).join("\n")).join("\n") + "\n   Acțiune necesară: Fiecare eroare din info_erori trebuie să aibă identificator unic.");
+        process.exit(1);
+    }
+
+    //toate verificările au trecut
+    console.log("Validarea datelor din erori.json: OK");
+    return true;
+}
+
+// funcție care inițializează obGlobal.obErori cu datele din erori.json,
+//  după ce apelează funcția de validare. Dacă validarea eșuează, 
+// procesul va fi oprit și nu se va ajunge la această inițializare.
 function initErori() {
+    // Executare validare - dacă ceva nu e în regulă, funcția va apela process.exit()
+    validareEroriFisierJSON();
+
     let continut = fs.readFileSync(path.join(__dirname, "resurse/json/erori.json")).toString("utf-8");
     let erori = obGlobal.obErori = JSON.parse(continut)
     let err_default = erori.eroare_default
@@ -58,6 +209,10 @@ function initErori() {
 }
 initErori()
 
+// funcție care primește un răspuns și un identificator de eroare, 
+// caută eroarea în obGlobal.obErori.info_erori după identificator și 
+// afișează pagina de eroare cu datele din fișierul JSON pentru acea eroare, 
+// dacă nu o găsește, afișează eroarea default
 function afisareEroare(res, identificator, titlu, text, imagine) {
     //TO DO cautam eroarea dupa identificator
     //daca sunt setate titlu, text, imagine, le folosim, 
@@ -79,10 +234,7 @@ app.get("/eroare", function (req, res) {
     afisareEroare(res, 404, "Pagina nu a fost gasita");
 });
 
-app.get("/despre", function (req, res) {
-    res.render("pagini/despre");
-});
-
+// functie care primeste calea unui fisier scss si o cale optionala pentru css, daca nu e data, se pune in acelasi loc cu acelasi nume
 function compileazaScss(caleScss, caleCss) {
     if (!caleCss) {
 
@@ -101,8 +253,8 @@ function compileazaScss(caleScss, caleCss) {
         fs.mkdirSync(caleBackup, { recursive: true })
     }
 
-    // la acest punct avem cai absolute in caleScss si  caleCss
-
+    // la acest punct avem cai absolute in caleScss si caleCss
+    // inainte de a compila, fac backup la fisierul css existent (daca exista)
     let numeFisCss = path.basename(caleCss);
     if (fs.existsSync(caleCss)) {
         fs.copyFileSync(caleCss, path.join(obGlobal.folderBackup, "resurse/css", numeFisCss))// +(new Date()).getTime()
@@ -114,6 +266,7 @@ function compileazaScss(caleScss, caleCss) {
 
 
 //la pornirea serverului
+// compilez toate fisierele scss din folderul scss
 vFisiere = fs.readdirSync(obGlobal.folderScss);
 for (let numeFis of vFisiere) {
     if (path.extname(numeFis) == ".scss") {
@@ -121,7 +274,7 @@ for (let numeFis of vFisiere) {
     }
 }
 
-
+//ascultam modificarile din folderul scss, daca se modifica un fisier scss, il recompilez
 fs.watch(obGlobal.folderScss, function (eveniment, numeFis) {
     if (eveniment == "change" || eveniment == "rename") {
         let caleCompleta = path.join(obGlobal.folderScss, numeFis);
@@ -130,11 +283,14 @@ fs.watch(obGlobal.folderScss, function (eveniment, numeFis) {
         }
     }
 })
-
+// la fiecare cerere pentru o pagina (exceptand celelalte rute definite mai sus)
+// verificam daca pagina exista, daca nu, afisam o pagina de eroare generica
+// este ultima functie app.get deoarece ea va fi apelata doar daca nu s-a potrivit
+// niciuna din rutele de mai sus
 app.get("/*pagina", function (req, res) {
     console.log("Cale pagina", req.url);
     if (req.url.startsWith("/resurse") && path.extname(req.url) == "") {
-        afisareEroare(res, 403, "Acces interzis", "Nu aveti permisiunea de a accesa aceasta resursa");
+        afisareEroare(res, 403);
         return;
     }
     if (path.extname(req.url) == ".ejs") {

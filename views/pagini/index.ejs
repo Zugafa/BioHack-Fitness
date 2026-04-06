@@ -18,8 +18,8 @@
                 <!--Z1 — WELCOME + CONCEPT-->
                 <section id="welcome">
                     <hgroup>
-                        <h2>Bine ai venit în Mainframe, </h2>
-                        <p class="ip"> Adresa IP: <%locals.ip%>
+                        <h2>Bine ai venit în Mainframe</h2>
+                        <p class="ip"> Adresa IP: <%=locals.ip%>
                         </p>
                         <hr class="separator-concept">
 
@@ -89,11 +89,11 @@
                 <section id="visual-feed">
                     <h2>Interfața Vizuală</h2>
                     <figure>
-                        <a href="resurse/imagini/salaMare.jpg" target="_self">
+                        <a href="/resurse/imagini/salaMare.jpg" target="_self">
                             <picture>
-                                <source srcset="resurse/imagini/salaMare.jpg" media="(min-width: 1024px)" width="1552">
-                                <source srcset="resurse/imagini/salaMedie.jpg" media="(min-width: 600px)" width="900">
-                                <img src="resurse/imagini/salaMica.jpg" alt="The Forge - Sector 0"
+                                <source srcset="/resurse/imagini/salaMare.jpg" media="(min-width: 1024px)" width="1552">
+                                <source srcset="/resurse/imagini/salaMedie.jpg" media="(min-width: 600px)" width="900">
+                                <img src="/resurse/imagini/salaMica.jpg" alt="The Forge - Sector 0"
                                     title="The Forge - Click pentru mărire" width="300">
                             </picture>
                         </a>
@@ -103,14 +103,33 @@
 
                     <div class="container-iframe">
                         <div class="taburi-iframe">
-                            <a href="resurse/video/intro.mp4" target="ifr-video">BioHack Intro</a>
+                            <a href="/resurse/video/intro.mp4" target="ifr-video">BioHack Intro</a>
                             <a href="https://www.youtube.com/embed/rFiSJAKjoBY" target="ifr-video">Phonk</a>
                             <a href="https://www.youtube.com/embed/A8rnGR5SIA0" target="ifr-video">Hardstyle</a>
                         </div>
-                        <iframe src="resurse/video/intro.mp4" name="ifr-video" title="BioHack video player"
+                        <iframe src="/resurse/video/intro.mp4" name="ifr-video" title="BioHack video player"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                     </div>
+
+                </section>
+
+                <script>
+                    function comutaVideo(tip) {
+                        const nativ = document.getElementById('video-nativ');
+                        const extern = document.getElementById('video-extern');
+
+                        if (tip === 'local') {
+                            nativ.style.display = 'block';
+                            extern.style.display = 'none';
+                            extern.src = ""; //oprire clip extern (daca rula)
+                        } else {
+                            nativ.style.display = 'none';
+                            nativ.pause(); //oprire clip local
+                            extern.style.display = 'block';
+                        }
+                    }
+                </script>
                 </section>
 
                 <section id="access-matrix">
@@ -215,11 +234,11 @@
 
                     <h3>Resurse Externe</h3>
                     <p>Referință externă: <a href="https://en.wikipedia.org/wiki/Biohacking" target="_blank">Manual
-                            Biohacking</a>.</p>
+                            Biohacking</a></p>
                     <p>Cod sursă: <a
                             href="https://github.com/Zugafa/BioHack-Fitness#documentatie">github.com/Zugafa/BioHack-Fitness</a><wbr>
                     </p>
-                    <a href="resurse/documente/ghid.pdf" download="BioHack_Protocol_Guide.pdf">⬇ Descarcă Ghidul de
+                    <a href="/resurse/documente/ghid.pdf" download="BioHack_Protocol_Guide.pdf">⬇ Descarcă Ghidul de
                         Start
                         (PDF)</a>
                 </section>
@@ -304,7 +323,7 @@
 
                 <section id="regulations-node">
                     <h2>Regulament Intern (PDF)</h2>
-                    <embed src="resurse/documente/regulament.pdf" type="application/pdf">
+                    <embed src="/resurse/documente/regulament.pdf" type="application/pdf">
                 </section>
             </div>
         </main>

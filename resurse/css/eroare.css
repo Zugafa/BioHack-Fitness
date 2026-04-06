@@ -1,0 +1,32 @@
+#err-imag {
+	background-image: url("/resurse/imagini/erori/interzis.png");
+	background-size: 100% auto;
+	background-position: center center;
+	background-repeat: no-repeat;
+	width: 30%;
+	min-width: 150px;
+	flex-shrink: 0;
+}
+
+#err-imag img {
+	width: 100%;
+	display: block;
+}
+
+#err-coloane {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 60vh;
+	padding: 2em;
+	gap: 2em;
+}
+
+#err-coloane section {
+	font-size: 2em;
+	padding-left: 1em;
+}
+
+#err-coloane h2 {
+	font-size: 2em;
+}

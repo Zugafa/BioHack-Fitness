@@ -28,6 +28,10 @@
     --shadow-nav:            0 0 15px rgba(var(--neon-blue-rgb), 0.5);
     --shadow-submeniu:       0 8px 24px rgba(0, 0, 0, 0.8), 0 0 12px rgba(var(--neon-blue-rgb), 0.3);
     --shadow-jack-hover:     0 0 15px rgba(var(--neon-magenta-rgb), 0.5);
+    --culoare-link: var(--neon-blue);
+    --culoare-link-vizitat: var(--neon-magenta);
+    --culoare-link-ext-hover: var(--neon-blue);
+    --culoare-pata-link: rgba(var(--neon-blue-rgb), 0.35);
 
 }
 
@@ -59,6 +63,86 @@ strong,
 i,
 em {
     color: var(--neon-magenta);
+}
+
+/* stilizare linkuri (et 4) */
+/* toate link-urile vor avea culoare-link  */
+a {
+    color: var(--culoare-link);
+}
+/* linkuri nevizitate */
+a:link {
+    color: var(--culoare-link);
+}
+/* linkuri vizitate */
+a:visited {
+    color: var(--culoare-link-vizitat);
+}
+/* linkuri externe (încep cu http) */
+a[href^="http"]::before {
+    content: "⮳";
+    display: inline-block;
+    margin-right: 0.2em;
+    font-size: 1.5em;
+    line-height: 1;
+    color: var(--neon-magenta);
+    transition: color 0.3s ease;
+}
+/* linkuri externe la hover */
+a[href^="http"]:hover::before,
+a[href^="http"]:focus-visible::before {
+    color: var(--culoare-link-ext-hover);
+}
+/* linkuri interne */
+main a,
+footer address a {
+    background-image: radial-gradient(ellipse at center, var(--culoare-pata-link) 0%, var(--culoare-pata-link) 40%, transparent 80%, transparent 100%);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 0% 0%;
+    transition: background-size 0.4s ease;
+    display: inline-block;
+    padding: 0.05em 0.18em;
+    border: 1px solid transparent;
+    border-radius: 0.25em;
+}
+/* linkuri interne la hover */
+main a:hover,
+main a:focus-visible,
+footer address a:hover,
+footer address a:focus-visible {
+    background-size: 85% 125%;
+}
+/* linkuri interne la click */
+main a:active,
+footer address a:active,
+#welcome nav a:active {
+    border-color: var(--neon-magenta);
+}
+/* linkuri interne fără efect de hover */
+main .meniu a,
+main .taburi-iframe>a {
+    background-image: none;
+    background-size: 0 0;
+}
+/* stilizare video și iframe */
+/*responsivitate*/
+.player-zone video, 
+.player-zone iframe {
+    width: 100%;
+    max-width: 900px;
+    min-width: 300px;
+    aspect-ratio: 16 / 9;
+    border: 2px solid var(--neon-blue);
+    border-radius: 10px;
+    background: black;
+}
+
+/*stilizare subtitrări vtt */
+video::cue {
+    background-color: white; /*fundal alb*/
+    color: var(--culoare-fundal); /*text închis*/
+    font-weight: bold;
 }
 
 q {
@@ -459,9 +543,25 @@ figure.fg-img>img {
     transition: color 0.2s;
 }
 
+#welcome nav a:link {
+    color: var(--neon-blue);
+}
+
+#welcome nav a:visited {
+    color: var(--culoare-link-vizitat) !important;
+}
+
 #welcome nav a:hover {
     color: var(--neon-magenta);
     text-shadow: 0 0 10px var(--neon-magenta);
+}
+
+footer address a:visited {
+    color: var(--culoare-link-vizitat) !important;
+}
+
+footer address a:link {
+    color: var(--culoare-link);
 }
 
 /* separator vizual între manifest și concept în interiorul Z1 */

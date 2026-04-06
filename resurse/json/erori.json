@@ -1,57 +1,52 @@
 {
     "cale_baza": "/resurse/imagini/erori",
-    "eroare_default":{
-        "titlu":"Eroare !!!",
-        "text": "A survenit o eroare.",
-        "imagine":"interzis.png"
+    "eroare_default": {
+        "titlu": "Eroare de sistem",
+        "text": "Mainframe-ul a detectat o anomalie necunoscută. Reboot recomandat.",
+        "imagine": "interzis.png"
     },
     "info_erori": [
         {
-            "identificator":404,
-            "status":true,
-            "titlu":"404 - N-am, bre!",
-            "text": "Nu-i pe serverul ăsta, sorry, caută în altă parte!",
-            "imagine":"lupa.png"
+            "identificator": 404,
+            "status": true,
+            "titlu": "404 — Sector Inexistent",
+            "text": "Coordonatele introduse nu corespund niciunui sector din Mainframe. Poate ai visat că pagina asta există?",
+            "imagine": "lupa.png"
         },
         {
-            "identificator":403,
-            "status":true,
-            "titlu":"403 - Da, tu ce cauți aici?!!",
-            "text": "Ai greșit ruta. Stânga-împrejur și pa!",
-            "imagine":"interzis.png"
+            "identificator": 403,
+            "status": true,
+            "titlu": "403 — Acces Refuzat",
+            "text": "AI-ul central ți-a detectat intenția. Nivelul tău de acces biometric nu îți permite intrarea în această zonă. Întoarce-te la protocol.",
+            "imagine": "accRefuzat.png"
         },
         {
-            "identificator":400,
-            "status":true,
-            "titlu":"400 - bad request",
-            "text": "Cerere gresita",
-            "imagine":"interzis.png"
+            "identificator": 400,
+            "status": true,
+            "titlu": "400 — Cerere Coruptă",
+            "text": "Cererea ta a ajuns la server defragmentată. Verifică ce ai trimis și încearcă din nou, subiect.",
+            "imagine": "cerereCorupta.png"
         },
-        
         {
-            "identificator":1,
-            "status":false,
-            "titlu":"Site în lucru",
-            "text": "Muncim, muncim!",
-            "imagine":"interzis.png"
+            "identificator": 1,
+            "status": false,
+            "titlu": "Sector în Construcție",
+            "text": "Inginerii BioHack lucrează la acest sector. Revino când upgrade-ul e complet.",
+            "imagine": "constructie.png"
         },
-        
         {
-            "identificator":2,
-            "status":false,
-            "titlu":"Eroare baza date",
-            "text": "Reveniti mai tarziu!",
-            "imagine":"interzis.png"
+            "identificator": 2,
+            "status": false,
+            "titlu": "Baza de Date Offline",
+            "text": "Serverul de biometrie nu răspunde. Datele tale sunt în siguranță — sistemul revine online în curând.",
+            "imagine": "baza_date_offline.png"
         },
-        
         {
-            "identificator":3,
-            "status":false,
-            "titlu":"Date gresit",
-            "text": "Verificati datele",
-            "imagine":"interzis.png"
+            "identificator": 3,
+            "status": false,
+            "titlu": "Date Invalide",
+            "text": "Senzorii au detectat date corupte în cererea ta. Verifică inputul și retransmite.",
+            "imagine": "dateInvalide.png"
         }
-        
     ]
 }
-  
