@@ -1,0 +1,40 @@
+<section id="echipa-biohack">
+    <h2><i class="fa-solid fa-users-gear"></i> BioHack Team</h2>
+    
+    <div class="grid-galerie-echipa">
+        <% 
+            // Inițializăm flag-urile pentru a pune ID-ul doar o singură dată per echipă
+            let foundPT = false;
+            let foundBA = false;
+            let foundHB = false;
+
+            for(let i=0; i < imagini.length; i++) { 
+                let membru = imagini[i]; 
+                let numeBaza = membru.cale_imagine.split('.')[0];
+                
+                // Determinăm ID-ul de ancoră
+                let anchorId = "";
+                if (membru.echipa === "cyber-coaches" && !foundPT) { anchorId = "team-pt"; foundPT = true; }
+                if (membru.echipa === "bio-analysts" && !foundBA) { anchorId = "team-ba"; foundBA = true; }
+                if (membru.echipa === "heart-boosters" && !foundHB) { anchorId = "team-hb"; foundHB = true; }
+        %>
+            <figure class="card-membru-galerie" 
+                    <%- anchorId ? `id="${anchorId}"` : "" %> 
+                    data-echipa="<%= membru.echipa %>">
+                
+                <picture>
+                    <source srcset="<%= caleBaza %>/mic/<%= numeBaza %>.png" media="(max-width: 700px)">
+                    <source srcset="<%= caleBaza %>/mediu/<%= numeBaza %>.png" media="(max-width: 1200px)">
+                    <img src="<%= caleBaza %>/<%= membru.cale_imagine %>" 
+                         alt="<%= membru.alt || membru.titlu %>" 
+                         title="<%= membru.descriere %>" />
+                </picture>
+                
+                <figcaption>
+                    <div class="nume-unit"><%= membru.titlu %></div>
+                    <p class="rol-desc"><%= membru.descriere %></p>
+                </figcaption>
+            </figure>
+        <% } %>
+    </div>
+</section>

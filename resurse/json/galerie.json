@@ -1,0 +1,329 @@
+{
+	"cale_galerie": "resurse/imagini/galerie",
+	"imagini": [
+		{
+			"cale_imagine": "pt_geo_sf1.png",
+			"titlu": "Geo // Cyber Coach",
+			"descriere": "Comandant de protocol pentru optimizarea reflexelor neurale.",
+			"sfert_ora": "1",
+			"echipa": "cyber-coaches",
+			"alt": "Cyber Coach Geo in Sector Zero",
+			"atribuire": "Foto de 'CyberArtist' pe Flickr, licență CC-BY 2.0"
+		},
+		{
+			"cale_imagine": "pt_andy_sf1.png",
+			"titlu": "Andy // Cyber Coach",
+			"descriere": "Specialist în recalibrarea biomecanică a subiecților Apex.",
+			"sfert_ora": "1",
+			"echipa": "cyber-coaches",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "pt_tudor_sf1.png",
+			"titlu": "Tudor // Cyber Coach",
+			"descriere": "Arhitect de sistem pentru antrenamentul de înaltă intensitate.",
+			"sfert_ora": "1",
+			"echipa": "cyber-coaches",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "ba_alexia_sf1.png",
+			"titlu": "Alexia // Bio Analyst",
+			"descriere": "Monitorizare integritate date și secvențiere genetică.",
+			"sfert_ora": "1",
+			"echipa": "bio-analysts",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "ba_radio_sf1.png",
+			"titlu": "Radioactiv // Bio Analyst",
+			"descriere": "Expert în algoritmi de calcul FFMI și predicție metabolică.",
+			"sfert_ora": "1",
+			"echipa": "bio-analysts",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "ba_andrei_sf1.png",
+			"titlu": "Andrei // Bio Analyst",
+			"descriere": "Sincronizare neurală și flux de date biometrice.",
+			"sfert_ora": "1",
+			"echipa": "bio-analysts",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "ba_Cris_sf1.png",
+			"titlu": "Cris // Bio Analyst",
+			"descriere": "Expert HRV și optimizare somn regenerativ.",
+			"sfert_ora": "1",
+			"echipa": "bio-analysts",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "hb_sebi_sf1.png",
+			"titlu": "Sebastian // Heart Booster",
+			"descriere": "Tehnician Recovery Lab pentru crioterapie avansată.",
+			"sfert_ora": "1",
+			"echipa": "heart-boosters",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "hb_radu_sf1.png",
+			"titlu": "Zabix // Heart Booster",
+			"descriere": "Specialist în homeostazie și recuperare prin compresie.",
+			"sfert_ora": "1",
+			"echipa": "heart-boosters",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "hb_valentina_sf1.png",
+			"titlu": "Valy // Heart Booster",
+			"descriere": "Garant al echilibrului cardiovascular post-upgrade.",
+			"sfert_ora": "1",
+			"echipa": "heart-boosters",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "pt_geo_sf2.png",
+			"titlu": "Geo // Cyber Coach",
+			"descriere": "Comandant de protocol pentru optimizarea reflexelor neurale.",
+			"sfert_ora": "2",
+			"echipa": "cyber-coaches",
+			"alt": "Cyber Coach Geo in Sector Zero",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "pt_andy_sf2.png",
+			"titlu": "Andy // Cyber Coach",
+			"descriere": "Specialist în recalibrarea biomecanică a subiecților Apex.",
+			"sfert_ora": "2",
+			"echipa": "cyber-coaches",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "pt_tudor_sf2.png",
+			"titlu": "Tudor // Cyber Coach",
+			"descriere": "Arhitect de sistem pentru antrenamentul de înaltă intensitate.",
+			"sfert_ora": "2",
+			"echipa": "cyber-coaches",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "ba_alexia_sf2.png",
+			"titlu": "Alexia // Bio Analyst",
+			"descriere": "Monitorizare integritate date și secvențiere genetică.",
+			"sfert_ora": "2",
+			"echipa": "bio-analysts",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "ba_radio_sf2.png",
+			"titlu": "Radioactiv // Bio Analyst",
+			"descriere": "Expert în algoritmi de calcul FFMI și predicție metabolică.",
+			"sfert_ora": "2",
+			"echipa": "bio-analysts",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "ba_andrei_sf2.png",
+			"titlu": "Andrei // Bio Analyst",
+			"descriere": "Sincronizare neurală și flux de date biometrice.",
+			"sfert_ora": "2",
+			"echipa": "bio-analysts",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "ba_cris_sf2.png",
+			"titlu": "Cris // Bio Analyst",
+			"descriere": "Expert HRV și optimizare somn regenerativ.",
+			"sfert_ora": "2",
+			"echipa": "bio-analysts",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "hb_sebi_sf2.png",
+			"titlu": "Sebastian // Heart Booster",
+			"descriere": "Tehnician Recovery Lab pentru crioterapie avansată.",
+			"sfert_ora": "2",
+			"echipa": "heart-boosters",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "hb_radu_sf2.png",
+			"titlu": "Zabix // Heart Booster",
+			"descriere": "Specialist în homeostazie și recuperare prin compresie.",
+			"sfert_ora": "2",
+			"echipa": "heart-boosters",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "hb_valentina_sf2.png",
+			"titlu": "Valy // Heart Booster",
+			"descriere": "Garant al echilibrului cardiovascular post-upgrade.",
+			"sfert_ora": "2",
+			"echipa": "heart-boosters",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "pt_geo_sf3.png",
+			"titlu": "Geo // Cyber Coach",
+			"descriere": "Comandant de protocol pentru optimizarea reflexelor neurale.",
+			"sfert_ora": "3",
+			"echipa": "cyber-coaches",
+			"alt": "Cyber Coach Geo in Sector Zero",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "pt_andy_sf3.png",
+			"titlu": "Andy // Cyber Coach",
+			"descriere": "Specialist în recalibrarea biomecanică a subiecților Apex.",
+			"sfert_ora": "3",
+			"echipa": "cyber-coaches",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "pt_tudor_sf3.png",
+			"titlu": "Tudor // Cyber Coach",
+			"descriere": "Arhitect de sistem pentru antrenamentul de înaltă intensitate.",
+			"sfert_ora": "3",
+			"echipa": "cyber-coaches",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "ba_alexia_sf3.png",
+			"titlu": "Alexia // Bio Analyst",
+			"descriere": "Monitorizare integritate date și secvențiere genetică.",
+			"sfert_ora": "3",
+			"echipa": "bio-analysts",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "ba_radio_sf3.png",
+			"titlu": "Radioactiv // Bio Analyst",
+			"descriere": "Expert în algoritmi de calcul FFMI și predicție metabolică.",
+			"sfert_ora": "3",
+			"echipa": "bio-analysts",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "ba_andrei_sf3.png",
+			"titlu": "Andrei // Bio Analyst",
+			"descriere": "Sincronizare neurală și flux de date biometrice.",
+			"sfert_ora": "3",
+			"echipa": "bio-analysts",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "ba_cris_sf3.png",
+			"titlu": "Cris // Bio Analyst",
+			"descriere": "Expert HRV și optimizare somn regenerativ.",
+			"sfert_ora": "3",
+			"echipa": "bio-analysts",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "hb_sebi_sf3.png",
+			"titlu": "Sebastian // Heart Booster",
+			"descriere": "Tehnician Recovery Lab pentru crioterapie avansată.",
+			"sfert_ora": "3",
+			"echipa": "heart-boosters",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "hb_radu_sf3.png",
+			"titlu": "Zabix // Heart Booster",
+			"descriere": "Specialist în homeostazie și recuperare prin compresie.",
+			"sfert_ora": "3",
+			"echipa": "heart-boosters",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "hb_valentina_sf3.png",
+			"titlu": "Valy // Heart Booster",
+			"descriere": "Garant al echilibrului cardiovascular post-upgrade.",
+			"sfert_ora": "3",
+			"echipa": "heart-boosters",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "pt_geo_sf4.png",
+			"titlu": "Geo // Cyber Coach",
+			"descriere": "Comandant de protocol pentru optimizarea reflexelor neurale.",
+			"sfert_ora": "4",
+			"echipa": "cyber-coaches",
+			"alt": "Cyber Coach Geo in Sector Zero",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "pt_andy_sf4.png",
+			"titlu": "Andy // Cyber Coach",
+			"descriere": "Specialist în recalibrarea biomecanică a subiecților Apex.",
+			"sfert_ora": "4",
+			"echipa": "cyber-coaches",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "pt_tudor_sf4.png",
+			"titlu": "Tudor // Cyber Coach",
+			"descriere": "Arhitect de sistem pentru antrenamentul de înaltă intensitate.",
+			"sfert_ora": "4",
+			"echipa": "cyber-coaches",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "ba_alexia_sf4.png",
+			"titlu": "Alexia // Bio Analyst",
+			"descriere": "Monitorizare integritate date și secvențiere genetică.",
+			"sfert_ora": "4",
+			"echipa": "bio-analysts",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "ba_radio_sf4.png",
+			"titlu": "Radioactiv // Bio Analyst",
+			"descriere": "Expert în algoritmi de calcul FFMI și predicție metabolică.",
+			"sfert_ora": "4",
+			"echipa": "bio-analysts",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "ba_andrei_sf4.png",
+			"titlu": "Andrei // Bio Analyst",
+			"descriere": "Sincronizare neurală și flux de date biometrice.",
+			"sfert_ora": "4",
+			"echipa": "bio-analysts",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "hb_cris_sf4.png",
+			"titlu": "Cris // Heart Booster",
+			"descriere": "Expert HRV și optimizare somn regenerativ.",
+			"sfert_ora": "4",
+			"echipa": "heart-boosters",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "hb_sebi_sf4.png",
+			"titlu": "Sebastian // Heart Booster",
+			"descriere": "Tehnician Recovery Lab pentru crioterapie avansată.",
+			"sfert_ora": "4",
+			"echipa": "heart-boosters",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "hb_radu_sf4.png",
+			"titlu": "Zabix // Heart Booster",
+			"descriere": "Specialist în homeostazie și recuperare prin compresie.",
+			"sfert_ora": "4",
+			"echipa": "heart-boosters",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "hb_valentina_sf4.png",
+			"titlu": "Valy // Heart Booster",
+			"descriere": "Garant al echilibrului cardiovascular post-upgrade.",
+			"sfert_ora": "4",
+			"echipa": "heart-boosters",
+			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		}
+	]
+}

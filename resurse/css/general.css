@@ -14,20 +14,20 @@
     --margine-pagina: 25px;
 
     /* variabile pentru nav */
-     --culoare-nav-bara:      var(--neon-blue);
-    --culoare-item-fundal:   var(--culoare-fundal);
-    --culoare-item-hover:    var(--neon-magenta);
-    --culoare-submeniu-top:  var(--neon-magenta);
-    --culoare-jack-border:   var(--neon-magenta);
-    --culoare-jack-hover:    var(--neon-magenta);
+    --culoare-nav-bara: var(--neon-blue);
+    --culoare-item-fundal: var(--culoare-fundal);
+    --culoare-item-hover: var(--neon-magenta);
+    --culoare-submeniu-top: var(--neon-magenta);
+    --culoare-jack-border: var(--neon-magenta);
+    --culoare-jack-hover: var(--neon-magenta);
     --culoare-text-submeniu: var(--text-principal);
-    --fs-nav-normal:         1em;
-    --fs-nav-hover:          1.15em;
-    --fs-item-normal:        0.85em;
-    --fs-item-hover:         0.95em;
-    --shadow-nav:            0 0 15px rgba(var(--neon-blue-rgb), 0.5);
-    --shadow-submeniu:       0 8px 24px rgba(0, 0, 0, 0.8), 0 0 12px rgba(var(--neon-blue-rgb), 0.3);
-    --shadow-jack-hover:     0 0 15px rgba(var(--neon-magenta-rgb), 0.5);
+    --fs-nav-normal: 1em;
+    --fs-nav-hover: 1.15em;
+    --fs-item-normal: 0.85em;
+    --fs-item-hover: 0.95em;
+    --shadow-nav: 0 0 15px rgba(var(--neon-blue-rgb), 0.5);
+    --shadow-submeniu: 0 8px 24px rgba(0, 0, 0, 0.8), 0 0 12px rgba(var(--neon-blue-rgb), 0.3);
+    --shadow-jack-hover: 0 0 15px rgba(var(--neon-magenta-rgb), 0.5);
     --culoare-link: var(--neon-blue);
     --culoare-link-vizitat: var(--neon-magenta);
     --culoare-link-ext-hover: var(--neon-blue);
@@ -46,14 +46,17 @@ body {
 }
 
 p {
-    border: 1px solid var(--culoare-fundal)
+    margin-bottom: 0.5rem;
+    /* Ajustează conform designului tău inițial */
+    border: none;
+    /* bootstrap adaugă border la paragrafe, îl resetăm */
 }
 
 h1,
 h2,
 h3 {
     color: var(--neon-blue);
-    text-shadow: var(--text-glow);
+    text-shadow: var(--text-glow) !important;
     text-transform: uppercase;
     letter-spacing: 2px;
 }
@@ -70,14 +73,17 @@ em {
 a {
     color: var(--culoare-link);
 }
+
 /* linkuri nevizitate */
 a:link {
     color: var(--culoare-link);
 }
+
 /* linkuri vizitate */
 a:visited {
     color: var(--culoare-link-vizitat);
 }
+
 /* linkuri externe (încep cu http) */
 a[href^="http"]::before {
     content: "⮳";
@@ -88,11 +94,13 @@ a[href^="http"]::before {
     color: var(--neon-magenta);
     transition: color 0.3s ease;
 }
+
 /* linkuri externe la hover */
 a[href^="http"]:hover::before,
 a[href^="http"]:focus-visible::before {
     color: var(--culoare-link-ext-hover);
 }
+
 /* linkuri interne */
 main a,
 footer address a {
@@ -106,6 +114,7 @@ footer address a {
     border: 1px solid transparent;
     border-radius: 0.25em;
 }
+
 /* linkuri interne la hover */
 main a:hover,
 main a:focus-visible,
@@ -113,21 +122,24 @@ footer address a:hover,
 footer address a:focus-visible {
     background-size: 85% 125%;
 }
+
 /* linkuri interne la click */
 main a:active,
 footer address a:active,
 #welcome nav a:active {
     border-color: var(--neon-magenta);
 }
+
 /* linkuri interne fără efect de hover */
 main .meniu a,
 main .taburi-iframe>a {
     background-image: none;
     background-size: 0 0;
 }
+
 /* stilizare video și iframe */
 /*responsivitate*/
-.player-zone video, 
+.player-zone video,
 .player-zone iframe {
     width: 100%;
     max-width: 900px;
@@ -140,8 +152,10 @@ main .taburi-iframe>a {
 
 /*stilizare subtitrări vtt */
 video::cue {
-    background-color: white; /*fundal alb*/
-    color: var(--culoare-fundal); /*text închis*/
+    background-color: white;
+    /*fundal alb*/
+    color: var(--culoare-fundal);
+    /*text închis*/
     font-weight: bold;
 }
 
@@ -173,6 +187,103 @@ header {
     margin: 0 var(--margine-pagina);
 }
 
+/* Container și counter */
+#echipa-biohack {
+    counter-reset: unit-counter;
+    width: 100%;
+}
+
+.grid-galerie-echipa {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 3 coloane egale */
+    gap: 25px;
+}
+
+/* Merge între card-membru și item-galerie */
+.card-membru-galerie {
+    background-color: rgba(var(--culoare-fundal-rgb), 0.05);
+    border: 1px solid var(--neon-blue);
+    border-radius: 12px;
+    padding: 15px;
+    margin: 0;
+    text-align: center;
+    overflow: hidden;
+}
+
+/* Cifre romane */
+.card-membru-galerie figcaption::before {
+    counter-increment: unit-counter;
+    content: counter(unit-counter, upper-roman) ". ";
+    color: var(--neon-magenta);
+    font-family: 'Share Tech Mono', monospace;
+    font-weight: bold;
+}
+
+.card-membru-galerie:nth-child(4) {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.card-membru-galerie:nth-child(5) {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+/* Rând 3 (Itemii 6-7): BA Analysts - Skip coloana 2 */
+.card-membru-galerie:nth-child(6) {
+    grid-column: 1;
+    grid-row: 3;
+}
+
+.card-membru-galerie:nth-child(7) {
+    grid-column: 3;
+    grid-row: 3;
+}
+
+/* Rând 4 (Itemii 8-10): HB Boosters */
+.card-membru-galerie:nth-child(n+8) {
+    grid-row: 4;
+}
+
+/* Tranziție cerință */
+.card-membru-galerie img {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    border: 1px solid var(--neon-blue);
+    transition: all 1.2s linear;
+    /* 1.2s = 1 secundă și o cincime */
+    scroll-margin-top: 100px;
+}
+
+.card-membru-galerie:hover img {
+    transform: scale(1.25) rotate(-10deg);
+    border-width: 5px;
+    /* x + 4px */
+    border-color: var(--neon-magenta);
+}
+
+/* Responsivitate */
+@media screen and (max-width: 1200px) {
+    .grid-galerie-echipa {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    /* 2 coloane */
+    .card-membru-galerie {
+        grid-column: auto !important;
+        grid-row: auto !important;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .grid-galerie-echipa {
+        grid-template-columns: 1fr;
+    }
+
+    /* 1 coloană */
+}
 
 #grid-pagina {
     display: grid;
@@ -622,7 +733,8 @@ footer address a:link {
     /* deasupra cercului */
     z-index: 1;
     color: var(--neon-blue);
-    font-size: 1.5rem; /*root element=dim parinte*/
+    font-size: 1.5rem;
+    /*root element=dim parinte*/
     line-height: 1;
     text-shadow: var(--text-glow);
 }
@@ -642,7 +754,7 @@ footer address a:link {
 }
 
 /*FFMI*/
-.formula-container msub > mi:first-child {
+.formula-container msub>mi:first-child {
     color: var(--neon-blue);
     font-weight: bold;
     font-style: normal;
@@ -650,7 +762,7 @@ footer address a:link {
 }
 
 /*norm*/
-.formula-container msub > mtext {
+.formula-container msub>mtext {
     color: var(--neon-magenta);
     font-size: 0.75em;
     font-style: italic;
@@ -658,7 +770,7 @@ footer address a:link {
 }
 
 /*m*/
-.formula-container mfrac > mrow > mi:first-child {
+.formula-container mfrac>mrow>mi:first-child {
     color: var(--neon-blue);
     font-style: italic;
     font-weight: bold;
@@ -666,7 +778,7 @@ footer address a:link {
 }
 
 /*BF*/
-.formula-container mfrac > mrow > mi:not(:first-child) {
+.formula-container mfrac>mrow>mi:not(:first-child) {
     color: var(--neon-magenta);
     font-style: italic;
     font-weight: bold;
@@ -674,10 +786,10 @@ footer address a:link {
 }
 
 /*H*/
-.formula-container mfrac > msup > mi {
+.formula-container mfrac>msup>mi {
     color: #ffd700;
     font-weight: bold;
-    font-style: normal; 
+    font-style: normal;
     font-size: 1.05em;
     text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
 }
@@ -690,7 +802,7 @@ footer address a:link {
 }
 
 /*2 din H^2*/
-.formula-container msup > mn {
+.formula-container msup>mn {
     color: #ffd700;
     font-size: 0.8em;
     text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
@@ -700,4 +812,427 @@ footer address a:link {
 .formula-container mo {
     color: rgba(224, 224, 224, 0.75);
     font-size: 1em;
+}
+
+/* Containerul extern pentru centrare și spațiere */
+.duotone-box-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Containerul principal pentru duotone */
+.duotone-box {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    height: 500px;
+    background-image: url('/resurse/imagini/bg_duotone.png');
+    background-size: cover;
+    background-position: center;
+    background-color: #000;
+    border: 1px solid #00e5ff;
+    overflow: hidden;
+    transition: filter 0.8s ease-in-out;
+    /* tranziție lină pentru efectul de hover */
+}
+
+/* Pseudo-element pentru prima culoare */
+.duotone-box::before {
+    content: "";
+    /* conținut gol pentru pseudo-element */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #00e5ff;
+    mix-blend-mode: darken;
+    /* se amestecă cu fundalul pentru a crea prima culoare */
+    z-index: 1;
+    transition: opacity 0.8s ease-in-out;
+}
+
+/* Pseudo-element pentru a doua culoare */
+.duotone-box::after {
+    content: "";
+    /* conținut gol pentru pseudo-element */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ff00ff;
+    mix-blend-mode: lighten;
+    /* se amestecă cu fundalul pentru a crea a doua culoare */
+    z-index: 2;
+    transition: opacity 0.8s ease-in-out;
+}
+
+/* Efectul de trecere la Grayscale la hover */
+.duotone-box:hover {
+    filter: grayscale(100%);
+    border-color: #ff00ff;
+    /* Schimbă bordura în magenta la hover */
+}
+
+/* Dezactivarea straturilor de culoare la hover */
+.duotone-box:hover::before,
+.duotone-box:hover::after {
+    opacity: 0;
+}
+
+.reflexie-oy {
+    position: relative;
+    display: inline-block;
+    color: var(--neon-blue);
+    /* Culoarea inițială */
+    transition: color 0.5s ease;
+    cursor: default;
+    z-index: 1;
+}
+
+/* Crearea reflexiei în dreapta */
+.reflexie-oy::after {
+    content: attr(data-text);
+    /* Preluăm textul din atributul HTML */
+    position: absolute;
+    left: 105%;
+    /* Reflexia stă la dreapta textului original */
+    top: 0;
+    white-space: nowrap;
+
+    /* Oglindire față de axa OY */
+    transform: scaleX(-1);
+
+    /* Efect de estompare pentru reflexie */
+    /* Textul rămâne la 80% opacitate până la jumătate (50%), apoi scade spre 20% */
+    mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.8) 50%, rgba(0, 0, 0, 0.2) 100%);
+    -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.8) 50%, rgba(0, 0, 0, 0.2) 100%);
+    opacity: .7;
+    transition: color 0.5s ease;
+}
+
+/* Schimbarea culorii la hover pentru ambele elemente simultan */
+.reflexie-oy:hover,
+.reflexie-oy:hover::after {
+    color: var(--neon-magenta);
+    /* Schimbare în magenta la hover */
+    text-shadow: 0 0 15px var(--neon-magenta);
+}
+
+/* Ajustare pentru ecrane mici - scoatem reflexia dacă nu are loc */
+@media screen and (max-width: 900px) {
+    .reflexie-oy::after {
+        display: none;
+    }
+}
+
+/* Pentru browsere moderne */
+::selection {
+    background-color: var(--neon-magenta, #ff00ff); /* Fundal magenta */
+    color: #000000; /* Text negru pentru contrast */
+    text-shadow: none; /* Fără glow */
+}
+
+/* Pentru versiuni mai vechi de Firefox */
+::-moz-selection {
+    background-color: var(--neon-magenta, #ff00ff);
+    color: #000000;
+    text-shadow: none;
+}
+
+.ticker-container {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-bottom: 1px solid var(--neon-blue);
+    overflow: hidden; /* oprește apariția scrollbar-ului */
+    white-space: nowrap;
+    padding: 5px 0;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--neon-blue);
+    text-shadow: 0 0 5px var(--neon-blue);
+}
+
+.ticker-text {
+    display: inline-block;
+    padding-left: 100%; /* Mesajul începe din afara ecranului (dreapta) */
+    animation: marquee-horizontal 20s linear infinite;
+}
+
+.ticker-text span {
+    margin-right: 50px; /* Spațiu între mesaje */
+}
+
+/* Animația recurentă */
+@keyframes marquee-horizontal {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(-100%, 0);
+    }
+}
+
+/* Oprire animație la hover */
+.ticker-container:hover .ticker-text {
+    animation-play-state: paused;
+    color: var(--neon-magenta);
+}
+
+.parallax-section {
+    position: relative;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    
+    /* Fundal fixed */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    /* Schimbare automată imagini (t=20s) */
+    animation: slideShow 20s infinite alternate ease-in-out;
+    
+    border-top: 1px solid var(--neon-magenta);
+    border-bottom: 1px solid var(--neon-magenta);
+}
+
+/* Linia de scanare */
+.parallax-section::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(to right, transparent, var(--neon-magenta), transparent);
+    box-shadow: 0 0 15px var(--neon-magenta);
+    opacity: 0.6;
+    z-index: 10;
+    animation: scanLine 6s linear infinite;
+    pointer-events: none;
+}
+
+.parallax-content {
+    background: rgba(10, 10, 10, 0.7);
+    backdrop-filter: blur(12px); /* Blur de fundal */
+    -webkit-backdrop-filter: blur(12px);
+    
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+    padding: 50px 20px;
+    margin: 40px;
+    width: 90%;
+    z-index: 5;
+}
+
+.text-coloane {
+    position: relative;
+    column-count: 2;
+    column-gap: 50px;
+    column-rule: 1px solid var(--neon-blue);
+    text-align: justify;
+}
+/* schimbare imagini de bg */
+@keyframes slideShow {
+    0%, 45% { background-image: url('/resurse/imagini/bg_parallax_1.png'); }
+    55%, 100% { background-image: url('/resurse/imagini/bg_parallax_2.png'); }
+}
+
+@keyframes scanLine {
+    0% { top: 0%; opacity: 0; }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.6; }
+    100% { top: 100%; opacity: 0; }
+}
+
+/* responsivitate pentru ecrane mici */
+@media screen and (max-width: 1100px) {
+    .text-coloane {
+        column-count: 1;
+        column-rule: none;
+    }
+    .parallax-section {
+        background-attachment: scroll; /* Dezactivează efectul de parallax pe mobil */
+    }
+}
+
+.tabel-container {
+    overflow-x: auto; /* fără scrollbar */
+    border: 1px solid var(--neon-blue, #00e5ff);
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(5px); /* blur de fundal */
+    margin: 2rem 0;
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.1);
+}
+
+#tabel-echipa {
+    width: 100%;
+    border-collapse: collapse; /* celule lipite */
+    font-family: 'Share Tech Mono', monospace;
+    color: #fff;
+}
+
+/* Header*/
+#tabel-echipa thead tr {
+    background-color: var(--neon-blue, #00e5ff);
+}
+
+#tabel-echipa th {
+    color: #000;
+    padding: 15px;
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* date */
+#tabel-echipa td, #tabel-echipa th {
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    padding: 12px 15px;
+}
+
+/* hover pe rânduri */
+#tabel-echipa tbody tr:hover {
+    background: rgba(255, 0, 255, 0.1); /* Glow magenta la hover */
+    transition: background 0.3s ease;
+}
+
+/* Stil pentru ultima coloană */
+#tabel-echipa td:last-child {
+    color: var(--neon-magenta, #ff00ff);
+    font-weight: bold;
+}
+
+/* Footer */
+#tabel-echipa tfoot {
+    background: rgba(0, 0, 0, 0.5);
+    font-size: 0.9rem;
+    color: var(--neon-blue, #00e5ff);
+}
+
+/* La sub 700px tabelul devine responsive */
+@media screen and (max-width: 700px) {
+    /* Transformăm tabelul în blocuri */
+    #tabel-echipa thead {
+        display: none; /* Fără header */
+    }
+
+    #tabel-echipa tr {
+        display: block;
+        margin-bottom: 20px;
+        border: 1px solid var(--neon-blue);
+        background: rgba(0, 0, 0, 0.8);
+        padding: 5px;
+    }
+
+    #tabel-echipa td {
+        display: block;
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+        border-bottom: 1px solid rgba(0, 229, 255, 0.1);
+        min-height: 40px;
+        line-height: 40px;
+    }
+
+    /* Generare etichete în funcție de coloană */
+    #tabel-echipa td::before {
+        position: absolute;
+        left: 15px;
+        width: 45%;
+        text-align: left;
+        font-weight: bold;
+        color: var(--neon-blue);
+        text-transform: uppercase;
+        font-size: 0.8rem;
+    }
+
+    /* Definirea numelor coloanelor */
+    #tabel-echipa td:nth-of-type(1)::before { content: "EXPERT UNIT:"; }
+    #tabel-echipa td:nth-of-type(2)::before { content: "PROTOCOL:"; }
+    #tabel-echipa td:nth-of-type(3)::before { content: "DURATĂ:"; }
+    #tabel-echipa td:nth-of-type(4)::before { content: "COST:"; }
+    #tabel-echipa td:nth-of-type(5)::before { content: "ACCES:"; }
+
+    #tabel-echipa tfoot {
+        display: none;
+    }
+}
+
+/* stilizare hr */
+.separator-cyber-7 {
+    border: none;
+    /* 7 benzi x 2px grosime = 14px înălțime totală */
+    height: 14px; 
+    width: 95%;
+    margin: 40px auto;
+    border-radius: 2px; /* Rotunjire capete */
+    
+    /* Gradient: benzi orizontale de 2px */
+    background: repeating-linear-gradient(
+        to bottom, /* direcție verticală începând de sus */
+        var(--neon-blue) 0px,
+        var(--neon-blue) 2px,    /* B1: Neon */
+        transparent 2px,         /* B2: Gol */
+        transparent 4px          /* Ciclu repetat la fiecare 4px */
+    );
+    
+    /* Glow discret pentru linii */
+    filter: drop-shadow(0 0 3px var(--neon-blue));
+    /* 0 0 3px => umbră difuză de 3px, fără deplasare (0 0) */ 
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+
+#hero-sector {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Ocupă tot ecranul la intrare */
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#video-bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1;
+    transform: translate(-50%, -50%);
+    object-fit: cover; /* Esențial: video-ul se comportă ca un cover image */
+    
+    /* Efect difuz */
+    filter: blur(5px) brightness(35%) grayscale(30%);
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4); /* Strat suplimentar de întunecare */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.hero-content {
+    text-align: center;
+    color: white;
+    font-family: 'Share Tech Mono', monospace;
 }

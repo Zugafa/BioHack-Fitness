@@ -12,58 +12,153 @@
 
 <body>
     <%- include ("../fragmente/header.ejs") %>
+        <section id="hero-sector">
+            <video autoplay muted loop playsinline id="video-bg">
+                <source src="/resurse/video/biohack-bg.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+
+            <div class="video-overlay">
+                <div class="hero-content">
+                    <h1 class="display-1 neon-text-blue">BINE AI VENIT, <span class="ip">
+                            <%=locals.ip%>
+                        </span></h1>
+                    <p class="lead">Începe protocolul de upgrade biologic la BioHack Fitness.</p>
+                </div>
+            </div>
+        </section>
         <main id="home">
             <div id="grid-pagina">
 
                 <!--Z1 — WELCOME + CONCEPT-->
                 <section id="welcome">
                     <hgroup>
-                        <h2>Bine ai venit în Mainframe</h2>
-                        <p class="ip"> Adresa IP: <%=locals.ip%>
-                        </p>
-                        <hr class="separator-concept">
+                        <!-- exemplificarea customizării bootstrap -->
+                        <section class="container-fluid my-5 p-4 border border-primary shadow-lg bg-dark rounded-0">
+                            <h2 class="display-4 text-primary mb-4">NEURAL_SYNC_STATUS</h2>
 
-                        <p>Centru de <i>recompoziție corporală</i> cu estetică <i>cyberpunk</i>. Corpul tău este un
-                            sistem —
-                            noi îl optimizăm.</p>
-                    </hgroup>
-                    <p>
-                        La <b>BioHack Fitness</b>, antrenamentul nu este o rutină — este un
-                        <b>protocol de upgrade biologic</b>. Accesează sistemul, alege-ți protocolul
-                        și începe <b>recompoziția corporală</b>.
-                    </p>
+                            <div class="row g-4">
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="card h-100 bg-black border-secondary text-light rounded-0">
+                                        <div class="card-header border-secondary bg-secondary text-black fw-bold">
+                                            CRITICAL_HARDWARE_INTEGRITY
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title h2">Core Stability</h5>
+                                            <p class="card-text text-secondary">Sincronizare neurală stabilizată la
+                                                98.4%.</p>
+                                            <div class="progress bg-dark rounded-0" style="height: 10px;">
+                                                <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated"
+                                                    role="progressbar" style="width: 98%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-                    <hr class="separator-concept">
+                                <div class="col-md-6 col-lg-4">
+                                    <ul class="list-group list-group-flush border border-primary rounded-0">
+                                        <li class="list-group-item bg-black text-primary border-primary">
+                                            <i class="fa-solid fa-microchip me-2"></i> BIOS_VERSION: 2.0.26
+                                        </li>
+                                        <li class="list-group-item bg-black text-secondary border-primary">
+                                            <i class="fa-solid fa-dna me-2"></i> GENETIC_DECODE: ACTIVE
+                                        </li>
+                                        <li class="list-group-item bg-black text-light border-primary">
+                                            <i class="fa-solid fa-bolt me-2"></i> POWER_LOAD: OPTIMAL
+                                        </li>
+                                    </ul>
+                                </div>
 
-                    <h2>Conceptul BioHack</h2>
-                    <p>La <b>BioHack Fitness</b>, promovăm un stil de viață bazat pe depășirea limitelor biologice prin
-                        tehnologie. Suntem cea mai dotată <b>sală de forță</b> tip <b>underground</b> din
-                        <b>București</b>,
-                        oferind un <b>upgrade genetic</b> prin efort.
-                    </p>
-
-                    <article>
-                        <h3>The Forge: Sistemul de Antrenament</h3>
-                        <p>Această unitate folosește <b>antrenament futuristic</b> pentru a forța adaptarea metabolică.
-                            <strong>Atenție: Accesul în Sectorul Zero este monitorizat constant!</strong>
-                        </p>
-                        <section>
-                            <h4>Neural Performance</h4>
-                            <p>Module axate pe reflexe și optimizarea conexiunii minte-corp.
-                                <q>Efortul este singura monedă acceptată în sistem.</q> — <cite>Arhitectul Șef</cite>
-                            </p>
+                                <div
+                                    class="col-md-12 col-lg-4 text-center d-flex flex-column justify-content-center border border-secondary p-3">
+                                    <h3 class="h1 text-secondary">SYSTEM_CONTROL</h3>
+                                    <div class="d-grid gap-2">
+                                        <button
+                                            class="btn btn-primary btn-lg rounded-0 fw-bold">JACK_IN_PROTOCOL</button>
+                                        <button class="btn btn-outline-secondary rounded-0">OVERRIDE_AI</button>
+                                    </div>
+                                </div>
+                            </div>
                         </section>
-                    </article>
 
-                    <dl>
-                        <dt><dfn id="biohacking">Biohacking</dfn></dt>
-                        <dd>Utilizarea tehnologiei și a biologiei pentru a manipula corpul uman în scopul creșterii
-                            performanței.</dd>
-                    </dl>
+                        <section id="parallax-scanner" class="parallax-section">
+                            <div class="parallax-content">
+                                <section id="manifesto-sector" class="container-fluid px-md-5">
+                                    <h2 class="display-5 text-secondary  reflexie-oy" data-text="BIOHACK_MANIFEST">
+                                        BIOHACK_MANIFEST // CONCEPT
+                                    </h2>
 
-                    <p>Folosim termeni tehnici precum <i lang="en">Hypertrophy Protocols</i> sau jargonul de <i
-                            lang="en">Bio-Data</i> pentru a măsura progresul în acest <b>hub de performanță umană</b>.
-                    </p>
+                                    <div class="text-coloane">
+                                        <p>
+                                            <b>BioHack Fitness</b> nu este doar o sală de antrenament; este singura
+                                            unitate de tip <b>underground</b> din <b>București</b> concepută ca un hub
+                                            de optimizare umană. Suntem un centru de <i>recompoziție corporală</i> cu
+                                            estetică <i>cyberpunk</i> unde tehnologia de ultimă oră întâlnește biologia
+                                            brută. Într-o lume în care performanța este dictată de algoritmi, noi tratăm
+                                            corpul tău ca pe un <b>sistem</b> — iar misiunea noastră este să îl
+                                            optimizăm.
+                                        </p>
+                                        <p>
+                                            La BioHack, antrenamentul nu este o rutină — este un <b>protocol de upgrade
+                                                biologic</b>. Sistemele noastre de monitorizare neurală analizează
+                                            fiecare contracție musculară în timp real, oferindu-ți un feedback
+                                            instantaneu pe care nicio metodă convențională nu l-ar putea egala. Credem
+                                            în forța brută, dar credem și mai mult în forța inteligentă, oferind un
+                                            <b>upgrade genetic</b> real prin efort susținut și date precise.
+                                        </p>
+                                        <p>
+                                            Protocoalele noastre sunt concepute pentru a minimiza timpul de recuperare
+                                            și a maximiza output-ul de forță. Fiecare unitate de antrenament din „The
+                                            Forge” este conectată la mainframe-ul central, asigurându-ne că efortul tău
+                                            este calibrat la milimetru. Nu căutăm doar estetică; căutăm funcționalitate
+                                            pură, rezistență la nivel celular și o eficiență a sistemului biologic greu
+                                            de atins în condiții normale.
+                                        </p>
+                                        <p>
+                                            Accesează sistemul, alege-ți protocolul de upgrade și începe <b>recompoziția
+                                                corporală</b>. Aici, conexiunea minte-corp depășește limitele naturale
+                                            ale speciei. Ești gata să treci la nivelul următor și să îți rescrii codul
+                                            genetic? <b>Jack in. Train hard. Evolve.</b>
+                                        </p>
+                                    </div>
+                                </section>
+                            </div>
+                        </section>
+                        <hr class="7separator-cyber-7">
+
+                        <hr class="separator-cyber-7">
+
+                        <br>
+
+
+                        <%-include ("../fragmente/galerie_statica.ejs") %>
+                            <br>
+                            <article>
+                                <h3>The Forge: Sistemul de Antrenament</h3>
+                                <p>Această unitate folosește <b>antrenament futuristic</b> pentru a forța adaptarea
+                                    metabolică.
+                                    <strong>Atenție: Accesul în Sectorul Zero este monitorizat constant!</strong>
+                                </p>
+                                <section>
+                                    <h4>Neural Performance</h4>
+                                    <p>Module axate pe reflexe și optimizarea conexiunii minte-corp.
+                                        <q>Efortul este singura monedă acceptată în sistem.</q> — <cite>Arhitectul
+                                            Șef</cite>
+                                    </p>
+                                </section>
+                            </article>
+
+                            <dl>
+                                <dt><dfn id="biohacking">Biohacking</dfn></dt>
+                                <dd>Utilizarea tehnologiei și a biologiei pentru a manipula corpul uman în scopul
+                                    creșterii
+                                    performanței.</dd>
+                            </dl>
+
+                            <p>Folosim termeni tehnici precum <i lang="en">Hypertrophy Protocols</i> sau jargonul de <i
+                                    lang="en">Bio-Data</i> pentru a măsura progresul în acest <b>hub de performanță
+                                    umană</b>.
+                            </p>
                 </section>
 
                 <section id="system-alerts">
@@ -113,23 +208,6 @@
                     </div>
 
                 </section>
-
-                <script>
-                    function comutaVideo(tip) {
-                        const nativ = document.getElementById('video-nativ');
-                        const extern = document.getElementById('video-extern');
-
-                        if (tip === 'local') {
-                            nativ.style.display = 'block';
-                            extern.style.display = 'none';
-                            extern.src = ""; //oprire clip extern (daca rula)
-                        } else {
-                            nativ.style.display = 'none';
-                            nativ.pause(); //oprire clip local
-                            extern.style.display = 'block';
-                        }
-                    }
-                </script>
                 </section>
 
                 <section id="access-matrix">
