@@ -1264,12 +1264,11 @@ footer address a:link {
 
 #hero-sector {
     position: relative;
-    width: auto;
-    max-width: calc(100% - (2 * var(--margine-pagina)));
-    margin: 0 var(--margine-pagina);
+    width: 100%;
+    max-width: none;
+    margin: 0;
     height: 100vh; /* Ocupă tot ecranul la intrare */
     overflow: hidden;
-    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1281,15 +1280,16 @@ main#home {
 }
 
 #video-bg {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     min-width: 0;
     min-height: 0;
-    z-index: -1;
+    z-index: -2;
     object-fit: cover; /* Esențial: video-ul se comportă ca un cover image */
+    pointer-events: none;
     
     /* Efect difuz */
     filter: blur(5px) brightness(35%) grayscale(30%);
@@ -1306,6 +1306,19 @@ main#home {
     align-items: center;
     justify-content: center;
     z-index: 1;
+}
+
+body.home-video-bg {
+    background-color: transparent;
+}
+
+body.home-video-bg::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    z-index: -1;
+    pointer-events: none;
 }
 
 .hero-content {
