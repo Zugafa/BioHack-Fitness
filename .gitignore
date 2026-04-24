@@ -1,6 +1,5 @@
-/node_modules/
-/temp/
-/logs/
-/backup/
-/fisiere_uploadate/
- 
+node_modules/
+temp/
+logs/
+backup/
+fisiere_uploadate/
