@@ -1,0 +1,297 @@
+@use "sass:list";
+@use "sass:math";
+
+$w-img: 550px;
+$h-img: 450px;
+
+$neon-cyan: #00f3ff;
+$neon-magenta: #ff00ea;
+$neon-black: #000000;
+
+// Ascundere pe ecrane medii și mici
+@media screen and (max-width: 1200px) {
+    .sectiune-galerie-animata {
+        display: none !important;
+    }
+}
+
+.sectiune-galerie-animata {
+    position: relative;
+    overflow: visible;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.container-galerie {
+    width: $w-img;
+    height: $h-img;
+    position: relative;
+    overflow: hidden;
+    margin: auto;
+    z-index: 1;
+
+    // Rama
+    border: 2px solid $neon-black;
+    box-shadow:
+        0 0 10px rgba($neon-cyan, 0.5), // Glow exterior
+        0 0 20px rgba($neon-cyan, 0.3), // Glow exterior difuz
+        inset 0 0 15px rgba($neon-cyan, 0.4); // Glow interior peste imagine
+
+    // Colțurile neon
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        width: 40px; // Lungimea liniilor din colțuri
+        height: 40px;
+        pointer-events: none; // Asigură că nu blochează hover-ul
+        z-index: 10;
+    }
+
+    // Colț stânga-sus
+    &::before {
+        top: 0;
+        left: 0;
+        border-top: 4px solid $neon-cyan;
+        border-left: 4px solid $neon-magenta;
+    }
+
+    // Colț dreapta-jos
+    &::after {
+        bottom: 0;
+        right: 0;
+        border-bottom: 4px solid $neon-cyan;
+        border-right: 4px solid $neon-magenta;
+    }
+
+    // Oprirea animației la hover
+    &:hover .grid-animat {
+        animation-play-state: paused;
+    }
+}
+
+.grid-animat {
+    display: grid;
+    grid-template-columns: repeat(3, $w-img);
+    width: calc(3 * #{$w-img});
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform-origin: 0 0;
+
+    // Timp total: 2.5 s/img
+    animation: miscare-complexa calc(#{$nr-imagini} * 2.5s) linear infinite alternate;
+}
+
+.grid-animat figure {
+    position: relative;
+    width: $w-img;
+    height: $h-img;
+    margin: 0;
+}
+
+// eticheta cu numele imaginii
+.nume-imagine-galerie {
+    position: absolute;
+    left:80%;
+    bottom: 8px;
+    transform: translateX(-50%);
+    margin: 0;
+    padding: 5px 10px;
+    font-size: 1.2rem;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    max-width: calc(100% - 20px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: 0.04em;
+    background: rgba($neon-black, 0.72);
+    border: 1px solid rgba($neon-cyan, 0.35);
+    border-radius: 8px;
+    text-shadow: 0 0 6px rgba($neon-cyan, 0.7);
+}
+
+@keyframes miscare-complexa {
+    // Matricea de parcurgere a imaginilor 
+    // 1   5  6
+    // 2   4  3
+    // 8   9  7
+    // 12 10 11
+    // 13 15 14
+    // 
+    // 1(0,0), 2(0,1), 3(2,1), 4(1,1), 5(1,0), 6(2,0), 7(2,2), 8(0,2), 9(1,2), 
+    // 10(1,3), 11(2,3), 12(0,3), 13(0,4), 14(2,4), 15(1,4)
+
+    $path-cols: (
+    );
+$path-rows: (
+);
+
+@if $nr-imagini ==9 {
+    $path-cols: (
+        0,
+        0,
+        2,
+        1,
+        1,
+        2,
+        2,
+        0,
+        1
+    );
+$path-rows: (
+    0,
+    1,
+    1,
+    1,
+    0,
+    0,
+    2,
+    2,
+    2
+);
+}
+
+@else if $nr-imagini ==12 {
+    $path-cols: (
+        0,
+        0,
+        2,
+        1,
+        1,
+        2,
+        2,
+        0,
+        1,
+        1,
+        2,
+        0
+    );
+$path-rows: (
+    0,
+    1,
+    1,
+    1,
+    0,
+    0,
+    2,
+    2,
+    2,
+    3,
+    3,
+    3
+);
+}
+
+@else if $nr-imagini ==15 {
+    $path-cols: (
+        0,
+        0,
+        2,
+        1,
+        1,
+        2,
+        2,
+        0,
+        1,
+        1,
+        2,
+        0,
+        0,
+        2,
+        1
+    );
+$path-rows: (
+    0,
+    1,
+    1,
+    1,
+    0,
+    0,
+    2,
+    2,
+    2,
+    3,
+    3,
+    3,
+    4,
+    4,
+    4
+);
+}
+
+// Timpii pentru fiecare etapă a animației
+$w-pause: 1; // Pauză scurtă pe fiecare imagine
+$w-rot: 6; // Rotație 360
+$w-trans: 35; // Translație pe o singură celulă
+
+// Calculăm durata totală
+$t-total: 0;
+
+@for $i from 1 through $nr-imagini {
+    // La fiecare schimbare de coordonată (adică la fiecare imagine) adăugăm oprire și rotație
+    $t-total: $t-total + $w-pause + $w-rot;
+
+    @if $i < $nr-imagini {
+        $col-curent: list.nth($path-cols, $i);
+        $rand-curent: list.nth($path-rows, $i);
+        $col-urmator: list.nth($path-cols, $i + 1);
+        $rand-urmator: list.nth($path-rows, $i + 1);
+
+        // Pentru salturile mai lungi (ex. col1 -> col3), durata creste proportional
+        $dist-celule: math.max(math.abs($col-urmator - $col-curent), math.abs($rand-urmator - $rand-curent));
+        $t-total: $t-total + ($w-trans * $dist-celule);
+    }
+}
+
+// Keyframes
+$t-curent: 0;
+$unghi-curent: 0deg;
+
+@for $i from 1 through $nr-imagini {
+    $col: list.nth($path-cols, $i);
+    $rand: list.nth($path-rows, $i);
+
+    $vx: $w-img * 0.5;
+    $vy: $h-img * 0.5;
+
+    $cx: (
+        $col * $w-img) + $vx;
+    $cy: (
+        $rand * $h-img) + $vy;
+
+    // A. SOSIREA pe imagine
+    $pct-sosire: math.div($t-curent * 100, $t-total);
+
+    #{$pct-sosire * 1%} {
+        transform: translate($vx, $vy) rotate($unghi-curent) translate(-$cx, -$cy
+        );
+}
+
+// B. PAUZA
+$t-curent: $t-curent + $w-pause;
+$pct-plecare: math.div($t-curent * 100, $t-total);
+
+#{$pct-plecare * 1%} {
+    transform: translate($vx, $vy) rotate($unghi-curent) translate(-$cx, -$cy);
+}
+
+// C. ROTAȚIA 360
+$t-curent: $t-curent + $w-rot;
+$unghi-curent: $unghi-curent + 360deg;
+$pct-rot: math.div($t-curent * 100, $t-total);
+
+#{$pct-rot * 1%} {
+    transform: translate($vx, $vy) rotate($unghi-curent) translate(-$cx, -$cy);
+}
+
+// D. TRANSLAȚIA
+@if $i < $nr-imagini {
+    $col-urmator: list.nth($path-cols, $i + 1);
+    $rand-urmator: list.nth($path-rows, $i + 1);
+    $dist-celule: math.max(math.abs($col-urmator - $col), math.abs($rand-urmator - $rand));
+    $t-curent: $t-curent + ($w-trans * $dist-celule);
+}
+}
+}

@@ -3,7 +3,8 @@ const path = require("path");
 const fs = require("fs");
 const sharp = require('sharp');
 const sass = require("sass");
-
+const pg = require("pg");
+const { get } = require("http");
 app = express();
 app.set("view engine", "ejs")
 
@@ -20,6 +21,17 @@ obGlobal = {
 console.log("Folder index.js", __dirname);
 console.log("Folder curent (de lucru)", process.cwd());
 console.log("Cale fisier", __filename);
+
+client = new pg.Client({
+    database: "biohack_2026",
+    user: "andrei",
+    password: "andrei",
+    host: "localhost",
+    port: 5432
+})
+
+client.connect(); //transmite date de conectare la bd
+
 
 // la pornirea serverului, verific daca exista folderele temp, logs, backup, 
 // fisiere_uploadate, daca nu exista, le creez
@@ -131,14 +143,62 @@ function getGalerieDataCuOptiuni(optiuni = {}) {
         caleBaza: galerie.cale_galerie
     };
 }
+
+function getGalerieAnimataData() {
+    // Încărcare date din JSON
+    const caleJson = path.join(__dirname, 'resurse/json/galerie.json');
+    let dateGalerie;
+    try {
+        dateGalerie = JSON.parse(fs.readFileSync(caleJson, 'utf8'));
+    } catch (err) {
+        console.error("[EROARE] Eșec la citirea galerie.json:", err);
+        return { imagini: [], cale: "" };
+    }
+
+    // Filtrare imagini cu galerie-animata: true
+    const imaginiEligibile = dateGalerie.imagini.filter(img => img["galerie-animata"] === true);
+
+    // Număr aleator
+    const optiuni = [9, 12, 15];
+    const nrImagini = optiuni[Math.floor(Math.random() * optiuni.length)];
+    const selectieImagini = imaginiEligibile.slice(0, nrImagini);
+
+    // Compilare SCSS
+    const caleScss = path.join(__dirname, 'resurse/scss_ejs/galerie_animata.scss');
+    const caleCss = path.join(__dirname, 'resurse/css/galerie_animata.css');
+    const variabilaSass = `$nr-imagini: ${nrImagini};\n`;
+
+    try {
+        const continutScss = fs.readFileSync(caleScss, 'utf8');
+        // Compilare prin injectare de variabilă înaintea codului SCSS
+        const rezultat = sass.compileString(variabilaSass + continutScss, {
+            style: "compressed",
+            loadPaths: [path.join(__dirname, 'resurse/sass')],
+            quietDeps: true
+        });
+        fs.writeFileSync(caleCss, rezultat.css);
+    } catch (err) {
+        console.error("[SASS_COMPILER_ERROR]:", err.message);
+    }
+
+    // Returnăm obiectul cu datele necesare pentru randarea EJS
+    return {
+        imagini: selectieImagini,
+        caleBaza: dateGalerie.cale_galerie
+    };
+}
+
 // rutele pentru paginile statice
 // daca se acceseaza /, /index sau /home, se afiseaza pagina index.ejs
 app.get(["/", "/index", "/home"], function (req, res) {
     const dateGalerie = getGalerieData();
+    const dateGalerieAnimata = getGalerieAnimataData();
     res.render("pagini/index", {
         ip: req.ip,
         imagini: dateGalerie.imagini,
-        caleBaza: dateGalerie.caleBaza
+        caleBaza: dateGalerie.caleBaza,
+        imaginiAnimata: dateGalerieAnimata.imagini,
+        caleBazaAnimata: dateGalerieAnimata.caleBaza
     });
 });
 
@@ -165,6 +225,45 @@ app.get("/lab", function (req, res) {
         caleBaza: dateGalerie.caleBaza
     });
 });
+
+app.get("/protocols", function (req, res) {
+    clauzaWhere = "";
+    if (req.query.tip) {
+        clauzaWhere = ` where tip_produs='${req.query.tip}'`
+    }
+    client.query(`select * from prajituri ${clauzaWhere}`, function (err, rez) { //asta e o
+        //  filtrare la nivel server
+        if (err) {
+            console.error("Eroare la interogare", err);
+            afisareEroare(res, 2);
+        }
+        else {
+            res.render("pagini/protocols", {
+                prajituri: rez.rows
+            });
+        }
+    }
+    )
+})
+
+app.get("/protocols/:id", function (req, res) {
+    client.query(`select * from prajituri where id=${req.params.id}`, function (err, rez) { //asta e o
+        //  filtrare la nivel server
+        if (err) {
+            console.error("Eroare la interogare", err);
+            afisareEroare(res, 2);
+        }
+        else {
+            if (rez.rowCount == 0) {
+                afisareEroare(res, 404, "Protocol inexistent", `Nu exista protocol cu id-ul ${req.params.id}`);
+            }
+            res.render("pagini/protocols", {
+                prod: rez.rows[0]
+            });
+        }
+    }
+    )
+})
 
 // bonus erori
 function validareEroriFisierJSON() {
@@ -250,20 +349,20 @@ function validareEroriFisierJSON() {
     }
 
     // 5. Verificare existență fișiere imagine
-    const imaginiLipsate = [];
+    const imaginiLipsa = [];
     for (let numeFisier of imaginiReferentiate) {
         const caleAbsoluta = path.join(caleBasaAbsoluta, numeFisier);
         if (!fs.existsSync(caleAbsoluta)) {
-            imaginiLipsate.push({
+            imaginiLipsa.push({
                 numeFisier: numeFisier,
                 caleAbsoluta: caleAbsoluta
             });
         }
     }
 
-    if (imaginiLipsate.length > 0) {
+    if (imaginiLipsa.length > 0) {
         let mesajEroriImagei = "EROARE: Lipsesc fișierele imagine referențiate!\n";
-        for (let img of imaginiLipsate) {
+        for (let img of imaginiLipsa) {
             mesajEroriImagei +=
                 `   - ${img.numeFisier}\n` +
                 `     Cale: ${img.caleAbsoluta}\n`;
@@ -364,7 +463,10 @@ function compileazaScss(caleScss, caleCss) {
     }
 
     try {
-        const rezultat = sass.compile(caleScss, { style: "expanded" });
+        const rezultat = sass.compile(caleScss, {
+            style: "expanded",
+            quietDeps: true
+        });
         fs.writeFileSync(caleCss, rezultat.css);
         console.log(`[SASS] Compilare reușită: ${path.basename(caleScss)} -> ${path.basename(caleCss)}`);
     } catch (err) {
@@ -380,13 +482,13 @@ const fisiere = fs.readdirSync(obGlobal.folderScss);
 for (let fisier of fisiere) {
     // Verificăm dacă extensia este .scss
     if (path.extname(fisier).toLowerCase() === ".scss") {
-        
+
         // Ignorăm fișierele parțiale (cele care încep cu underscore, ex: _variabile.scss)
         // deoarece acestea sunt importate, nu compilate individual
         if (!fisier.startsWith("_")) {
             const caleScss = path.join(obGlobal.folderScss, fisier);
             const caleCss = path.join(obGlobal.folderCss, fisier.replace(".scss", ".css"));
-            
+
             compileazaScss(caleScss, caleCss);
         }
     } else {
@@ -399,12 +501,12 @@ for (let fisier of fisiere) {
 fs.watch(obGlobal.folderScss, (eveniment, numeFis) => {
     // Verificăm dacă fișierul are extensia .scss
     if (numeFis && path.extname(numeFis) === ".scss") {
-        
+
         let caleAbsolutaScss = path.join(obGlobal.folderScss, numeFis);
 
         // Verificăm dacă fișierul chiar există (să nu fie o ștergere)
         if (fs.existsSync(caleAbsolutaScss)) {
-            
+
             // Generăm calea pentru CSS-ul corespondent
             let numeFisCss = numeFis.replace(".scss", ".css");
             let caleAbsolutaCss = path.join(obGlobal.folderCss, numeFisCss);
@@ -513,7 +615,7 @@ function verificaImagini() {
             });
             console.warn(`\x1b[33m[SFAT]\x1b[0m Asigurați-vă că numele fișierelor din JSON corespund exact cu cele de pe disc (case-sensitive pe Linux).\n`);
         } else {
-            console.log("\x1b[32m[BIOHACK_SYNC]\x1b[0m Toate resursele grafice din galerie au fost validate cu succes.");
+            console.log("\x1b[32m[VALIDARE GALERIE]\x1b[0m Toate resursele grafice din galerie au fost validate cu succes.");
         }
 
     } catch (err) {

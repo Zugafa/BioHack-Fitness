@@ -51,7 +51,7 @@
 			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
 		},
 		{
-			"cale_imagine": "ba_Cris_sf1.png",
+			"cale_imagine": "ba_cris_sf1.png",
 			"titlu": "Cris // Bio Analyst",
 			"descriere": "Expert HRV și optimizare somn regenerativ.",
 			"sfert_ora": "1",
@@ -294,11 +294,11 @@
 			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
 		},
 		{
-			"cale_imagine": "hb_cris_sf4.png",
-			"titlu": "Cris // Heart Booster",
+			"cale_imagine": "ba_cris_sf4.png",
+			"titlu": "Cris // Bio Analyst",
 			"descriere": "Expert HRV și optimizare somn regenerativ.",
 			"sfert_ora": "4",
-			"echipa": "heart-boosters",
+			"echipa": "bio-analysts",
 			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
 		},
 		{
@@ -324,6 +324,111 @@
 			"sfert_ora": "4",
 			"echipa": "heart-boosters",
 			"atribuire": "AI Generated - Prompt by Andrei N. - Nano Banana 2"
+		},
+		{
+			"cale_imagine": "raftGantere.png",
+			"titlu": "Raft Gantere",
+			"descriere": "Raft de gantere pentru antrenamente de forță și rezistență.",
+			"galerie-animata": true,
+			"atribuire": "AI Generated - Prompt by Andrei N. - Copilot 2"
+		},
+		{
+			"cale_imagine": "pwRack.png",
+			"titlu": "Power Rack",
+			"descriere": "Rack multifuncțional pentru exerciții de genuflexiuni, împins și tracțiuni.",
+			"galerie-animata": true,
+			"atribuire": "AI Generated - Prompt by Andrei N. - Copilot 2"
+		},
+		{
+			"cale_imagine": "baraOlimpica.png",
+			"titlu": "Bară Olimpică",
+			"descriere": "Bară olimpică de 20 kg pentru antrenamente de forță și competiții.",
+			"galerie-animata": true,
+			"atribuire": "AI Generated - Prompt by Andrei N. - Copilot 2"
+		},
+		{
+			"cale_imagine": "scripeti.png",
+			"titlu": "Scripeți",
+			"descriere": "Scripeți pentru antrenamente de tracțiuni și exerciții de izolare a mușchilor.",
+			"galerie-animata": true,
+			"atribuire": "AI Generated - Prompt by Andrei N. - Copilot 2"
+		},
+		{
+			"cale_imagine": "legPress.png",
+			"titlu": "Leg Press",
+			"descriere": "Mașină pentru antrenamente de picioare și exerciții de izolare a mușchilor.",
+			"galerie-animata": true,
+			"atribuire": "AI Generated - Prompt by Andrei N. - Copilot 2"
+		},
+		{
+			"cale_imagine": "benziAlergare.png",
+			"titlu": "Benzi de Alergare",
+			"descriere": "Benzi de alergare pentru antrenamente de cardio.",
+			"galerie-animata": true,
+			"atribuire": "AI Generated - Prompt by Andrei N. - Copilot 2"
+		},
+		{
+			"cale_imagine": "bicicletaSpinning.png",
+			"titlu": "Bicicletă de Spinning",
+			"descriere": "Bicicletă de antrenament pentru exerciții de cardio și fitness.",
+			"galerie-animata": true,
+			"atribuire": "AI Generated - Prompt by Andrei N. - Copilot 2"
+		},
+		{
+			"cale_imagine": "aparatVaslit.png",
+			"titlu": "Aparat Vâslit",
+			"descriere": "Aparat de antrenament pentru exerciții de cardio și fitness.",
+			"galerie-animata": true,
+			"atribuire": "AI Generated - Prompt by Andrei N. - Copilot 2"
+		},
+		{
+			"cale_imagine": "sacBox.png",
+			"titlu": "Sac de Box",
+			"descriere": "Sac de box pentru potolirea spiritelor încinse.",
+			"galerie-animata": true,
+			"atribuire": "AI Generated - Prompt by Andrei N. - Copilot 2"
+		},
+		{
+			"cale_imagine": "pistaSprint.png",
+			"titlu": "Pistă de Sprint",
+			"descriere": "Pistă de sprint pentru antrenamente de viteză și agilitate.",
+			"galerie-animata": true,
+			"atribuire": "AI Generated - Prompt by Andrei N. - Copilot 2"
+		},
+		{
+			"cale_imagine": "scannerBiometric.png",
+			"titlu": "Scanner Biometric",
+			"descriere": "Scanner biometric pentru evaluarea stării de sănătate.",
+			"galerie-animata": true,
+			"atribuire": "AI Generated - Prompt by Andrei N. - Copilot 2"
+		},
+		{
+			"cale_imagine": "saunaCryo.png",
+			"titlu": "Saună Criogenică",
+			"descriere": "Saună criogenică pentru recuperare și relaxare.",
+			"galerie-animata": true,
+			"atribuire": "AI Generated - Prompt by Andrei N. - Copilot 2"
+		},
+		{
+			"cale_imagine": "piscina.png",
+			"titlu": "Piscină",
+			"descriere": "Piscină pentru activități de înot și relaxare.",
+			"galerie-animata": true,
+			"atribuire": "AI Generated - Prompt by Andrei N. - Copilot 2"
+		},
+		{
+			"cale_imagine": "combatSim.png",
+			"titlu": "Simulator de Luptă",
+			"descriere": "Simulator de luptă pentru antrenamente de autoapărare și arte marțiale.",
+			"galerie-animata": true,
+			"atribuire": "AI Generated - Prompt by Andrei N. - Copilot 2"
+		},
+		{
+			"cale_imagine": "vestiar.png",
+			"titlu": "Vestiar",
+			"descriere": "Vestiar pentru membrii complexului.",
+			"galerie-animata": true,
+			"atribuire": "AI Generated - Prompt by Andrei N. - Copilot 2"
 		}
 	]
 }

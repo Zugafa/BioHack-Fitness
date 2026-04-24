@@ -124,15 +124,13 @@
                                 </section>
                             </div>
                         </section>
-                        <hr class="7separator-cyber-7">
 
                         <hr class="separator-cyber-7">
 
-                        <br>
-
-
                         <%-include ("../fragmente/galerie_statica.ejs") %>
-                            <br>
+
+                            <hr class="separator-cyber-7">
+
                             <article>
                                 <h3>The Forge: Sistemul de Antrenament</h3>
                                 <p>Această unitate folosește <b>antrenament futuristic</b> pentru a forța adaptarea
@@ -208,6 +206,22 @@
                     </div>
 
                 </section>
+
+                <section id="sectiune-galerie-animata" class="sectiune-galerie-animata container text-center my-5">
+                    <h2 class="neon-text mb-4">FACILITĂȚI</h2>
+
+                    <div class="container-galerie">
+                        <div class="grid-animat">
+                            <% for(let img of imaginiAnimata) { %>
+                                <figure class="m-0 p-0">
+                                    <img src="/<%- caleBazaAnimata %>/<%- img.cale_imagine %>" alt="<%- img.titlu %>"
+                                        style="width: 550px; height: 450px; object-fit: cover;">
+                                    <figcaption class="nume-imagine-galerie"><%- img.titlu || img.cale_imagine %>
+                                    </figcaption>
+                                </figure>
+                                <% } %>
+                        </div>
+                    </div>
                 </section>
 
                 <section id="access-matrix">
