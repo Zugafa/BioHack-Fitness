@@ -1288,7 +1288,7 @@ main#home {
     min-width: 0;
     min-height: 0;
     z-index: -2;
-    object-fit: cover; /* Esențial: video-ul se comportă ca un cover image */
+    object-fit: cover; /* Video-ul se comportă ca un cover image */
     pointer-events: none;
     
     /* Efect difuz */
@@ -1310,6 +1310,12 @@ main#home {
 
 body.home-video-bg {
     background-color: transparent;
+}
+
+body.home-video-bg header {
+    background-color: rgba(18, 18, 18, 0.38);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
 
 body.home-video-bg::before {

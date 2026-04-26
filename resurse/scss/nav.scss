@@ -98,7 +98,7 @@ nav {
     box-shadow: var(--shadow-nav);
     position: relative;
     z-index: 1000;
-
+    
     // label pe desktop se comporta ca un div
     ul.meniu>li>label {
         @extend %flex-centrat;
