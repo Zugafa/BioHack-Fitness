@@ -32,6 +32,20 @@ client = new pg.Client({
 
 client.connect(); //transmite date de conectare la bd
 
+// Middleware: populare categorii produse în `res.locals` pentru meniuri
+app.use(function (req, res, next) {
+    client.query(`select distinct departament from protocoale order by departament`, function (err, rez) {
+        if (err) {
+            console.error("Eroare la preluare categorii protocoale pentru meniu", err);
+            res.locals.prod_categories = [];
+        } else {
+            // transform rows -> array of strings
+            res.locals.prod_categories = rez.rows.map(r => r.departament);
+        }
+        next();
+    });
+});
+
 
 // la pornirea serverului, verific daca exista folderele temp, logs, backup, 
 // fisiere_uploadate, daca nu exista, le creez
@@ -56,143 +70,121 @@ app.get("/favicon.ico", function (req, res) {
 });
 
 
-function getGalerieData() {
-    return getGalerieDataCuOptiuni({
-        sortareEchipe: true,
-        maxImagini: 10
-    });
-}
-// functie care primeste un array de imagini, calea absoluta 
-// a galeriei si niste optiuni, si proceseaza imaginile din array,
-// adica le redimensioneaza si le salveaza in folderele "mediu" si "mic"
-//  din galerie
-function proceseazaImaginiGalerie(imagini, caleAbsolutaGalerie, optiuni = {}) {
-    const { logGenerare = false } = optiuni;
-
-    imagini.forEach(img => {
-        const numeBaza = path.parse(img.cale_imagine).name;
-        const caleOriginala = path.join(caleAbsolutaGalerie, img.cale_imagine);
-
-        [
-            { nume: "mediu", w: 450, q: 95 },
-            { nume: "mic", w: 250, q: 90 }
-        ].forEach(dim => {
-            const folderDest = path.join(caleAbsolutaGalerie, dim.nume);
-            const caleNoua = path.join(folderDest, `${numeBaza}.png`);
-
-            if (!fs.existsSync(folderDest)) {
-                fs.mkdirSync(folderDest, { recursive: true });
-            }
-
-            if (!fs.existsSync(caleNoua)) {
-                sharp(caleOriginala)
-                    .resize({
-                        width: dim.w,
-                        kernel: sharp.kernel.lanczos3
-                    })
-                    .sharpen()
-                    .withMetadata()
-                    .png({ quality: dim.q })
-                    .toFile(caleNoua)
-                    .then(() => {
-                        if (logGenerare) {
-                            console.log(`Generat: ${dim.nume}/${numeBaza}`);
-                        }
-                    })
-                    .catch(err => console.error(`Eroare Sharp la ${numeBaza}:`, err));
-            }
-        });
-    });
-}
-// functie care citeste datele din fisierul galerie.json,
-// filtreaza imaginile care corespund sfertului de ora curent,
-// le sorteaza dupa echipa daca optiunea sortareEchipe e true,
-// le limiteaza la numarul maxImagini, si apoi le proceseaza
-// cu functia proceseazaImaginiGalerie, si returneaza un obiect cu 
-// imaginile filtrate
-function getGalerieDataCuOptiuni(optiuni = {}) {
+// Funcție unificată pentru gestionarea galeriilor (Statică și Animată)
+function getGalerieData(optiuni = {}) {
     const {
+        tipGalerie = 'statica', // Poate fi 'statica' sau 'animata'
         dataReferinta = new Date(),
         sortareEchipe = false,
         maxImagini = 10,
         logGenerare = false
     } = optiuni;
 
-    const dataJson = fs.readFileSync(path.join(__dirname, "resurse/json/galerie.json"), "utf8");
-    const galerie = JSON.parse(dataJson);
-
-    const minut = dataReferinta.getMinutes();
-    const sfertCurent = Math.floor(minut / 15) + 1;
-
-    let imaginiFiltrate = galerie.imagini
-        .filter(img => img.sfert_ora == sfertCurent);
-
-    if (sortareEchipe) {
-        const ordineEchipe = { "cyber-coaches": 1, "bio-analysts": 2, "heart-boosters": 3 };
-        imaginiFiltrate = imaginiFiltrate
-            .sort((a, b) => (ordineEchipe[a.echipa] || 99) - (ordineEchipe[b.echipa] || 99));
+    // 1. Încărcarea datelor din JSON
+    const caleJson = path.join(__dirname, 'resurse/json/galerie.json');
+    let galerie;
+    try {
+        galerie = JSON.parse(fs.readFileSync(caleJson, 'utf8'));
+    } catch (err) {
+        console.error("[EROARE] Eșec la citirea galerie.json:", err);
+        return { imagini: [], caleBaza: "" };
     }
 
-    imaginiFiltrate = imaginiFiltrate.slice(0, maxImagini);
-
+    let imaginiFiltrate = galerie.imagini;
     const caleAbsolutaGalerie = path.join(__dirname, galerie.cale_galerie);
-    proceseazaImaginiGalerie(imaginiFiltrate, caleAbsolutaGalerie, { logGenerare });
+    let nrImaginiFinal = maxImagini;
 
+    // 2. Logica de Filtrare și Sortare în funcție de tipul galeriei
+    if (tipGalerie === 'animata') {
+        // Logica pentru Galeria Animată
+        imaginiFiltrate = imaginiFiltrate.filter(img => img["galerie-animata"] === true);
+        const optiuniNr = [9, 12, 15];
+        nrImaginiFinal = optiuniNr[Math.floor(Math.random() * optiuniNr.length)];
+        imaginiFiltrate = imaginiFiltrate.slice(0, nrImaginiFinal);
+
+        // Compilare SCSS
+        const caleScss = path.join(__dirname, 'resurse/scss_ejs/galerie_animata.scss');
+        const caleCss = path.join(__dirname, 'resurse/css/galerie_animata.css');
+        // injectare variabila nrImaginiFinal in scss
+        const variabilaSass = `$nr-imagini: ${nrImaginiFinal};\n`;
+
+        try {
+            const continutScss = fs.readFileSync(caleScss, 'utf8');
+            const rezultat = sass.compileString(variabilaSass + continutScss, {
+                style: "compressed", // pe un singur rand
+                loadPaths: [path.join(__dirname, 'resurse/sass')], // pentru a putea importa partiale din resurse/sass
+                quietDeps: true // fara warning pentru dependente
+            });
+            fs.writeFileSync(caleCss, rezultat.css);
+        } catch (err) {
+            console.error("[EROARE COMPILARE SASS]:", err.message);
+        }
+
+    } else {
+        // Logica pentru Galeria Statică (implicit)
+        const minut = dataReferinta.getMinutes();
+        const sfertCurent = Math.floor(minut / 15) + 1;
+
+        imaginiFiltrate = imaginiFiltrate.filter(img => img.sfert_ora == sfertCurent);
+
+        if (sortareEchipe) {
+            const ordineEchipe = { "cyber-coaches": 1, "bio-analysts": 2, "heart-boosters": 3 };
+            imaginiFiltrate.sort((a, b) => (ordineEchipe[a.echipa] || 99) - (ordineEchipe[b.echipa] || 99));
+        }// ||99 asigură că imaginile care nu au echipă sau au o echipă necunoscută vor fi sortate la final
+
+        imaginiFiltrate = imaginiFiltrate.slice(0, nrImaginiFinal);
+
+        // Procesare imagini cu Sharp
+        imaginiFiltrate.forEach(img => {
+            const numeBaza = path.parse(img.cale_imagine).name;
+            const caleOriginala = path.join(caleAbsolutaGalerie, img.cale_imagine);
+
+            [
+                { nume: "mediu", w: 450, q: 98 },
+                { nume: "mic", w: 250, q: 95 }
+            ].forEach(dim => {
+                const folderDest = path.join(caleAbsolutaGalerie, dim.nume);
+                const caleNoua = path.join(folderDest, `${numeBaza}.png`);
+
+                if (!fs.existsSync(folderDest)) {
+                    fs.mkdirSync(folderDest, { recursive: true });
+                }
+
+                if (!fs.existsSync(caleNoua)) {
+                    sharp(caleOriginala)
+                        .resize({ width: dim.w, kernel: sharp.kernel.lanczos3 })
+                        .sharpen() //mai detaliat
+                        .withMetadata() //pastreaza metadatele originale (ex: orientare, data, etc.)
+                        .png({ quality: dim.q })
+                        .toFile(caleNoua)
+                        .then(() => {
+                            if (logGenerare) console.log(`Generat: ${dim.nume}/${numeBaza}`);
+                        })//.then() se executa daca procesarea a avut succes,
+                        //   iar .catch() se executa daca a aparut o eroare in procesare
+                        .catch(err => console.error(`Eroare Sharp la ${numeBaza}:`, err));
+                }
+            });
+        });
+    }
+
+    // 3. Returnarea datelor
     return {
         imagini: imaginiFiltrate,
         caleBaza: galerie.cale_galerie
     };
 }
 
-function getGalerieAnimataData() {
-    // Încărcare date din JSON
-    const caleJson = path.join(__dirname, 'resurse/json/galerie.json');
-    let dateGalerie;
-    try {
-        dateGalerie = JSON.parse(fs.readFileSync(caleJson, 'utf8'));
-    } catch (err) {
-        console.error("[EROARE] Eșec la citirea galerie.json:", err);
-        return { imagini: [], cale: "" };
-    }
-
-    // Filtrare imagini cu galerie-animata: true
-    const imaginiEligibile = dateGalerie.imagini.filter(img => img["galerie-animata"] === true);
-
-    // Număr aleator
-    const optiuni = [9, 12, 15];
-    const nrImagini = optiuni[Math.floor(Math.random() * optiuni.length)];
-    const selectieImagini = imaginiEligibile.slice(0, nrImagini);
-
-    // Compilare SCSS
-    const caleScss = path.join(__dirname, 'resurse/scss_ejs/galerie_animata.scss');
-    const caleCss = path.join(__dirname, 'resurse/css/galerie_animata.css');
-    const variabilaSass = `$nr-imagini: ${nrImagini};\n`;
-
-    try {
-        const continutScss = fs.readFileSync(caleScss, 'utf8');
-        // Compilare prin injectare de variabilă înaintea codului SCSS
-        const rezultat = sass.compileString(variabilaSass + continutScss, {
-            style: "compressed",
-            loadPaths: [path.join(__dirname, 'resurse/sass')],
-            quietDeps: true
-        });
-        fs.writeFileSync(caleCss, rezultat.css);
-    } catch (err) {
-        console.error("[SASS_COMPILER_ERROR]:", err.message);
-    }
-
-    // Returnăm obiectul cu datele necesare pentru randarea EJS
-    return {
-        imagini: selectieImagini,
-        caleBaza: dateGalerie.cale_galerie
-    };
-}
-
 // rutele pentru paginile statice
 // daca se acceseaza /, /index sau /home, se afiseaza pagina index.ejs
 app.get(["/", "/index", "/home"], function (req, res) {
-    const dateGalerie = getGalerieData();
-    const dateGalerieAnimata = getGalerieAnimataData();
+    const dateGalerie = getGalerieData({
+        tipGalerie: 'statica',
+        sortareEchipe: true,
+        maxImagini: 10
+    });
+    const dateGalerieAnimata = getGalerieData({
+        tipGalerie: 'animata'
+    });
     res.render("pagini/index", {
         ip: req.ip,
         imagini: dateGalerie.imagini,
@@ -214,7 +206,8 @@ app.get("/despre", function (req, res) {
 // daca se acceseaza /lab, se afiseaza pagina lab.ejs
 // aceasta pagina va afisa o galerie de imagini, care se vor incarca din fisierul galerie.json
 app.get("/lab", function (req, res) {
-    const dateGalerie = getGalerieDataCuOptiuni({
+    const dateGalerie = getGalerieData({
+        tipGalerie: 'statica',
         maxImagini: 10,
         logGenerare: true
     });
@@ -227,42 +220,76 @@ app.get("/lab", function (req, res) {
 });
 
 app.get("/protocols", function (req, res) {
-    clauzaWhere = "";
-    if (req.query.tip) {
-        clauzaWhere = ` where tip_produs='${req.query.tip}'`
+    let clauzaWhere = "";
+    if (req.query.departament) {
+        clauzaWhere = ` where departament='${req.query.departament}'`;
     }
-    client.query(`select * from prajituri ${clauzaWhere}`, function (err, rez) { //asta e o
-        //  filtrare la nivel server
+
+    client.query(`select * from protocoale ${clauzaWhere}`, function (err, rez) {
         if (err) {
-            console.error("Eroare la interogare", err);
+            console.error("Eroare la interogare protocoale", err);
             afisareEroare(res, 2);
         }
         else {
-            res.render("pagini/protocols", {
-                prajituri: rez.rows
+            // Query pentru opțiuni departamente
+            client.query(`select distinct departament from protocoale order by departament`, function (errOpt, rezOpt) {
+                if (errOpt) {
+                    console.error("Eroare la interogare optiuni protocoale", errOpt);
+                    rezOpt = { rows: [] };
+                }
+
+                // Query pentru min/max preț
+                client.query(`select COALESCE(MIN(pret), 0) as pret_min, COALESCE(MAX(pret), 0) as pret_max from protocoale where pret is not null`, function (errPrice, rezPrice) {
+                    if (errPrice || !rezPrice.rows[0].pret_min) {
+                        rezPrice = { rows: [{ pret_min: 0, pret_max: 1000 }] };
+                    }
+
+                    // Query pentru min/max durată
+                    client.query(`select COALESCE(MIN(durata_zile), 0) as durata_min, COALESCE(MAX(durata_zile), 0) as durata_max from protocoale`, function (errDur, rezDur) {
+                        if (errDur || !rezDur.rows[0].durata_min) {
+                            rezDur = { rows: [{ durata_min: 0, durata_max: 360 }] };
+                        }
+
+                        // Query pentru tipuri de produse
+                        client.query(`select distinct tip_produs from protocoale where tip_produs is not null order by tip_produs`, function (errTip, rezTip) {
+                            if (errTip) {
+                                rezTip = { rows: [] };
+                            }
+
+                            res.render("pagini/protocols", {
+                                protocoale: rez.rows,
+                                optiuni: rezOpt.rows,
+                                pret_min: Math.floor(rezPrice.rows[0].pret_min || 0),
+                                pret_max: Math.ceil(rezPrice.rows[0].pret_max || 1000),
+                                durata_min: rezDur.rows[0].durata_min || 0,
+                                durata_max: rezDur.rows[0].durata_max || 360,
+                                tipuri_produse: rezTip.rows.map(r => r.tip_produs)
+                            });
+                        });
+                    });
+                });
             });
         }
-    }
-    )
-})
+    });
+});
 
 app.get("/protocols/:id", function (req, res) {
-    client.query(`select * from prajituri where id=${req.params.id}`, function (err, rez) { //asta e o
-        //  filtrare la nivel server
+    client.query(`select * from protocoale where id=${req.params.id}`, function (err, rez) {
         if (err) {
-            console.error("Eroare la interogare", err);
+            console.error("Eroare la interogare protocol", err);
             afisareEroare(res, 2);
         }
         else {
             if (rez.rowCount == 0) {
                 afisareEroare(res, 404, "Protocol inexistent", `Nu exista protocol cu id-ul ${req.params.id}`);
             }
-            res.render("pagini/protocols", {
-                prod: rez.rows[0]
-            });
+            else {
+                res.render("pagini/protocol", {
+                    prod: rez.rows[0]
+                });
+            }
         }
-    }
-    )
+    });
 })
 
 // bonus erori
@@ -296,12 +323,12 @@ function validareEroriFisierJSON() {
 
     // 2. Verificare proprietăți info_erori, cale_baza, eroare_default
     const propietatiBaza = ["info_erori", "cale_baza", "eroare_default"];
-    const propietatilipsete = propietatiBaza.filter(prop => !(prop in erori));
+    const propietatilipsa = propietatiBaza.filter(prop => !(prop in erori));
 
-    if (propietatilipsete.length > 0) {
+    if (propietatilipsa.length > 0) {
         console.error(
             "   EROARE: Lipsesc proprietăți obligatorii la nivel de rădăcină!\n" +
-            `   Proprietăți lipsă: ${propietatilipsete.join(", ")}\n` +
+            `   Proprietăți lipsă: ${propietatilipsa.join(", ")}\n` +
             `   Proprietăți existente: ${Object.keys(erori).join(", ")}\n` +
             `   Proprietăți obligatorii: ${propietatiBaza.join(", ")}\n` +
             "   Acțiune necesară: Adaugă proprietățile lipsă în fișierul erori.json."
@@ -327,12 +354,12 @@ function validareEroriFisierJSON() {
     }
 
     // 4. Verificare existență folder cale_baza
-    const caleBasaAbsoluta = path.join(__dirname, erori.cale_baza);
-    if (!fs.existsSync(caleBasaAbsoluta)) {
+    const caleBazaAbsoluta = path.join(__dirname, erori.cale_baza);
+    if (!fs.existsSync(caleBazaAbsoluta)) {
         console.error(
             "   EROARE: Folderul specificat în 'cale_baza' nu există!\n" +
             `   Cale de bază (din JSON): ${erori.cale_baza}\n` +
-            `   Cale absolută: ${caleBasaAbsoluta}\n` +
+            `   Cale absolută: ${caleBazaAbsoluta}\n` +
             "   Acțiune necesară: Creează folderul sau corectează calea în erori.json."
         );
         process.exit(1);
@@ -351,7 +378,7 @@ function validareEroriFisierJSON() {
     // 5. Verificare existență fișiere imagine
     const imaginiLipsa = [];
     for (let numeFisier of imaginiReferentiate) {
-        const caleAbsoluta = path.join(caleBasaAbsoluta, numeFisier);
+        const caleAbsoluta = path.join(caleBazaAbsoluta, numeFisier);
         if (!fs.existsSync(caleAbsoluta)) {
             imaginiLipsa.push({
                 numeFisier: numeFisier,
@@ -361,21 +388,25 @@ function validareEroriFisierJSON() {
     }
 
     if (imaginiLipsa.length > 0) {
-        let mesajEroriImagei = "EROARE: Lipsesc fișierele imagine referențiate!\n";
+        let mesajEroriImagineLipsa = "EROARE: Lipsesc fișierele imagine referențiate!\n";
         for (let img of imaginiLipsa) {
-            mesajEroriImagei +=
+            mesajEroriImagineLipsa +=
                 `   - ${img.numeFisier}\n` +
                 `     Cale: ${img.caleAbsoluta}\n`;
         }
-        mesajEroriImagei +=
+        mesajEroriImagineLipsa +=
             "   Acțiune necesară: Adaugă fișierele imagine în folderul 'resurse/imagini/erori/' sau " +
             "modifică numele imaginilorîn erori.json pentru a folosi imagini existente.";
-        console.error(mesajEroriImagei);
+        console.error(mesajEroriImagineLipsa);
         process.exit(1);
     }
 
     // 6. Verificare proprietăți duplicate în același obiect, direct pe string-ul JSON brut
-    const propDuplicata = continutRaw.match(/\{[^{}]*"([^"]+)"\s*:[^{}]*"\1"\s*:/s);
+    const propDuplicata = continutRaw.match(/\{[^{}]*"([^"]+)"\s*:[^{}]*"\1"\s*:/s); //s de la final
+    //trateaza ca pe un bloc continuu de date, eliminand caractere speciale
+    //^ negare [^{}]* - cauta orice caracter care nu e { sau }, * - de 0 sau mai multe ori
+    //"([^"]+)" - cauta o secventa de caractere intre ghilimele, care reprezinta numele proprietatii, si o retine in grupuri
+    //1-backreference la numele proprietatii, apoi cauta din nou aceeasi proprietate in acelasi obiect
     if (propDuplicata) {
         console.error(`EROARE: Proprietatea "${propDuplicata[1]}" este specificată de mai multe ori în același obiect din erori.json.`);
         process.exit(1);
@@ -383,7 +414,10 @@ function validareEroriFisierJSON() {
 
     // 7. Verificare identificatori duplicați + afișare proprietăți fără "identificator"
     const grupId = erori.info_erori.reduce((acc, e) => ((acc[e.identificator] ??= []).push(e), acc), {});
+    // grupId va fi un obiect în care cheia este identificatorul și valoarea este un array cu toate erorile care au acel identificator
     const dubluri = Object.entries(grupId).filter(([, v]) => v.length > 1);
+    // din obiectul grupId, extrage doar acele intrari, indiferent de cheie,
+    // unde exista mai multe obiecte cu acelasi identificator, adica dubluri
     if (dubluri.length) {
         console.error("EROARE: Există mai multe erori cu același identificator!\n" + dubluri.map(([id, v]) => `   Identificator ${id}:\n` + v.map(e => `     - ${JSON.stringify(Object.fromEntries(Object.entries(e).filter(([k]) => k !== "identificator")))}`).join("\n")).join("\n") + "\n   Acțiune necesară: Fiecare eroare din info_erori trebuie să aibă identificator unic.");
         process.exit(1);
@@ -422,8 +456,8 @@ function afisareEroare(res, identificator, titlu, text, imagine) {
     //altfel folosim cele din fisierul json pentru eroarea gasita
     //daca nu o gasim, afisam eroarea default
     let eroare = obGlobal.obErori.info_erori.find(elem => elem.identificator == identificator)
-    if (eroare?.status) {
-        res.status(eroare.status)
+    if (eroare?.identificator) {
+        res.status(eroare.identificator)
     }
     let errDefault = obGlobal.obErori.eroare_default
     res.render("pagini/eroare", {
@@ -458,7 +492,7 @@ function compileazaScss(caleScss, caleCss) {
             fs.copyFileSync(caleCss, caleBackup);
             console.log(`[BACKUP] S-a creat o versiune nouă: ${numeBackup}`);
         } catch (err) {
-            console.error(`[EROARE BACKUP] Nu s-a putut crea backup-ul: ${err.message}`);
+            console.error(`[EROARE BACKUP] Nu s-a putut crea backupul: ${err.message}`);
         }
     }
 
@@ -492,7 +526,7 @@ for (let fisier of fisiere) {
             compileazaScss(caleScss, caleCss);
         }
     } else {
-        // Opțional: logăm ce ignorăm pentru debugging
+        // Logăm ce ignorăm pentru debugging
         console.log(`[SKIP] Fișierul ${fisier} a fost ignorat (nu este sursă SCSS).`);
     }
 }
@@ -553,23 +587,21 @@ app.get("/*pagina", function (req, res) {
     }
 });
 
-
+// bonus verificarea datelor din JSON
 function verificaImagini() {
-    const fs = require("fs");
-    const path = require("path");
 
     const caleJson = path.join(__dirname, "resurse/json/galerie.json");
 
-    // Verificăm dacă fișierul de configurare există
+    // a. Verificăm dacă fișierul de configurare există
     if (!fs.existsSync(caleJson)) {
-        console.error(`\x1b[31m[CRITICAL]\x1b[0m Fișierul de configurare '${caleJson}' lipsește.`);
+        console.error(`\x1b[31m[EROARE GALERIE]\x1b[0m Fișierul de configurare '${caleJson}' lipsește.`);
         return;
     }
 
     try {
         const date = JSON.parse(fs.readFileSync(caleJson, "utf8"));
 
-        // 1. Validare Folder Galerie (cale_galerie)
+        // Validare Folder Galerie (cale_galerie)
         // Rezolvăm calea: dacă e relativă, o raportăm la directorul curent
         const caleFolderGalerie = path.isAbsolute(date.cale_galerie)
             ? date.cale_galerie
@@ -586,11 +618,10 @@ function verificaImagini() {
             return; // Nu putem verifica imaginile dacă folderul părinte nu există
         }
 
-        // 2. Validare Fișiere Imagine
+        // b. Validare Fișiere Imagine
         let imaginiLipsa = [];
 
         date.imagini.forEach((img, index) => {
-            // Folosim 'cale_imagine' conform structurii din proiectul tău
             const numeFisier = img.cale_imagine;
             const caleAbsolutaImg = path.join(caleFolderGalerie, numeFisier);
 
@@ -605,7 +636,7 @@ function verificaImagini() {
 
         // Afișare rezultate
         if (imaginiLipsa.length > 0) {
-            console.warn(`\x1b[33m[EROARE DATE GALERIE]\x1b[0m S-au găsit ${imaginiLipsa.length} fișiere lipsă:`);
+            console.warn(`\x1b[33m[EROARE GALERIE]\x1b[0m S-au găsit ${imaginiLipsa.length} fișiere lipsă:`);
 
             imaginiLipsa.forEach(err => {
                 console.warn(
@@ -623,5 +654,6 @@ function verificaImagini() {
     }
 }
 verificaImagini()
+
 app.listen(8080);
 console.log("Serverul a pornit!");

@@ -1,0 +1,275 @@
+/* Styling pentru pagina de detaliu a unui protocol */
+
+main {
+    padding: var(--padding-zona) var(--margine-pagina);
+}
+
+main section {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+main h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 3px solid var(--neon-blue);
+}
+
+/* Article pentru protocol */
+#produse .protocol,
+#elem_protocol {
+    background-color: rgba(0, 69, 77, 0.3);
+    border: 2px solid var(--neon-blue);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 0 20px rgba(var(--neon-blue-rgb), 0.3);
+}
+
+#produse .protocol h3,
+.protocol h3 {
+    background-color: rgba(0, 229, 255, 0.1);
+    border-bottom: 2px solid var(--neon-blue);
+    text-align: center;
+    padding: 1rem;
+    margin: 0 0 1.5rem 0;
+    color: var(--neon-blue);
+    text-shadow: 0 0 10px rgba(var(--neon-blue-rgb), 0.5);
+}
+
+/* Container pentru continut */
+.container-produs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    align-items: start;
+}
+
+/* Tabel caracteristici */
+.caracteristici-produs {
+    width: 100%;
+    border-collapse: collapse;
+    grid-column: 1;
+}
+
+.caracteristici-produs td {
+    padding: 0.7rem;
+    border: 1px solid rgba(var(--neon-blue-rgb), 0.3);
+    font-size: 0.95rem;
+}
+
+.label-caracteristica {
+    background-color: rgba(0, 229, 255, 0.15);
+    color: var(--neon-blue);
+    font-weight: bold;
+    width: 45%;
+    border-right: 3px solid var(--neon-magenta);
+    text-align: right;
+    padding-right: 1rem;
+}
+
+.caracteristici-produs td[class^="val-"] {
+    background-color: rgba(255, 0, 255, 0.05);
+    color: var(--text-principal);
+    padding-left: 1rem;
+}
+
+/* Valori specifice */
+.val-pret {
+    color: #00ff88;
+    font-weight: bold;
+}
+
+.val-durata {
+    color: var(--neon-blue);
+}
+
+.val-departament {
+    color: var(--neon-magenta);
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.val-nivel {
+    color: #ffaa00;
+}
+
+.val-tecnologii {
+    color: var(--text-principal);
+}
+
+/* Imagine detaliu */
+.imagine-produs {
+    grid-column: 2;
+    text-align: center;
+    margin: 0;
+    padding: 1rem;
+    background-color: rgba(0, 69, 77, 0.5);
+    border-radius: 0.3rem;
+    border: 2px solid rgba(var(--neon-blue-rgb), 0.3);
+}
+
+.imagine-produs img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.3rem;
+    border: 2px solid var(--neon-blue);
+    box-shadow: 0 0 15px rgba(var(--neon-blue-rgb), 0.3);
+    transition: all 0.3s ease;
+}
+
+.imagine-produs img:hover {
+    box-shadow: 0 0 25px rgba(var(--neon-magenta-rgb), 0.5);
+    border-color: var(--neon-magenta);
+}
+
+.imagine-produs figcaption {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: rgba(var(--text-principal), 0.7);
+    font-style: italic;
+}
+
+/* Descriere */
+.descriere-produs {
+    grid-column: 1 / -1;
+    color: var(--text-principal);
+    line-height: 1.6;
+    font-size: 1rem;
+    background-color: rgba(0, 229, 255, 0.05);
+    padding: 1rem;
+    border-left: 4px solid var(--neon-magenta);
+    border-radius: 0.3rem;
+    margin-bottom: 1rem;
+}
+
+/* Categorie/Departament */
+.categorie-produs {
+    grid-column: 1 / -1;
+    text-align: center;
+    font-weight: bold;
+    color: var(--neon-magenta);
+    margin: 0;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.val-categorie {
+    color: var(--neon-blue);
+    background-color: rgba(0, 229, 255, 0.15);
+    padding: 0.4rem 0.8rem;
+    border-radius: 0.3rem;
+    display: inline-block;
+    border: 1px solid var(--neon-blue);
+}
+
+/* Tag-uri departamente */
+.protocol.Neural-Performance,
+.protocol.Neural_Performance {
+    border-color: #00d4ff;
+}
+
+.protocol.Neural-Performance h3,
+.protocol.Neural_Performance h3 {
+    background-color: rgba(0, 212, 255, 0.1);
+    border-bottom-color: #00d4ff;
+}
+
+.protocol.Biomechanical-Power,
+.protocol.Biomechanical_Power {
+    border-color: #ff00ff;
+}
+
+.protocol.Biomechanical-Power h3,
+.protocol.Biomechanical_Power h3 {
+    background-color: rgba(255, 0, 255, 0.1);
+    border-bottom-color: #ff00ff;
+}
+
+.protocol.Recovery-Protocols,
+.protocol.Recovery_Protocols {
+    border-color: #00ff88;
+}
+
+.protocol.Recovery-Protocols h3,
+.protocol.Recovery_Protocols h3 {
+    background-color: rgba(0, 255, 136, 0.1);
+    border-bottom-color: #00ff88;
+}
+
+/* Timp (data adaugare) */
+time {
+    color: #ffaa00;
+    font-weight: bold;
+}
+
+/* Responsive - single column */
+@media screen and (max-width: 768px) {
+    main {
+        padding: 1rem;
+    }
+
+    main section {
+        max-width: 100%;
+    }
+
+    .container-produs {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .imagine-produs {
+        grid-column: 1;
+        max-height: 300px;
+    }
+
+    .caracteristici-produs td {
+        padding: 0.5rem;
+        font-size: 0.85rem;
+    }
+
+    .label-caracteristica {
+        width: 50%;
+        padding-right: 0.5rem;
+    }
+
+    .descriere-produs {
+        font-size: 0.95rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #produse .protocol,
+    .protocol {
+        padding: 1rem;
+    }
+
+    main h2 {
+        font-size: 1.2rem;
+    }
+
+    .caracteristici-produs td {
+        padding: 0.4rem;
+        font-size: 0.8rem;
+    }
+
+    .label-caracteristica {
+        text-align: left;
+        padding-right: 0.3rem;
+    }
+
+    .caracteristici-produs td[class^="val-"] {
+        padding-left: 0.3rem;
+    }
+
+    .imagine-produs {
+        padding: 0.5rem;
+    }
+
+    .imagine-produs img {
+        max-height: 200px;
+    }
+}

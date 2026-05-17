@@ -1,0 +1,260 @@
+/* Styling pentru pagina de listare a protocoalelor */
+
+main {
+    padding: var(--padding-zona) var(--margine-pagina);
+}
+
+/* Titlu */
+.page-title {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+/* Notificare Calcul */
+#notification-calc {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: rgba(0, 229, 255, 0.95);
+    color: #0a0a0a;
+    border: 2px solid #ff00ff;
+    border-radius: 0.4rem;
+    padding: 1.5rem;
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.7);
+    z-index: 1000;
+    min-width: 250px;
+    animation: slideIn 0.3s ease-out;
+}
+
+#notification-calc h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #ff00ff;
+    text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+}
+
+#notification-calc p {
+    margin: 0.5rem 0;
+    font-weight: bold;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Grid pentru protocoale */
+.grid-produse {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+.grid-produse .protocol {
+    border-radius: 0.5rem;
+    box-shadow: 0 0 15px rgba(var(--neon-blue-rgb), 0.3);
+    overflow: hidden;
+    background-color: rgba(0, 69, 77, 0.3);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    display: flex;
+    flex-direction: column;
+}
+
+.grid-produse .protocol:hover {
+    box-shadow: 0 0 25px rgba(var(--neon-magenta-rgb), 0.5);
+    border-color: var(--neon-magenta);
+    transform: translateY(-5px);
+}
+
+/* Titlu protocol */
+.grid-produse .protocol h3 {
+    background-color: rgba(0, 229, 255, 0.1);
+    border-bottom: 2px solid var(--neon-blue);
+    text-align: center;
+    margin: 0;
+    padding: 1rem;
+    color: var(--neon-blue);
+    text-shadow: 0 0 10px rgba(var(--neon-blue-rgb), 0.5);
+    min-height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.3;
+    word-break: break-word;
+}
+
+.grid-produse .protocol h3 a {
+    color: inherit;
+    text-decoration: none;
+    display: block;
+}
+
+.grid-produse .protocol h3 a:hover {
+    color: var(--neon-magenta);
+    text-shadow: 0 0 10px rgba(var(--neon-magenta-rgb), 0.5);
+}
+
+/* Container pentru tabel si imagine */
+.container-produs {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(150px, 0.85fr);
+    gap: 1rem;
+    padding: 1.2rem;
+    align-items: start;
+}
+
+/* Tabel caracteristici */
+.caracteristici-produs {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    grid-column: 1;
+}
+
+.caracteristici-produs td {
+    padding: 0.7rem;
+    border: 1px solid rgba(var(--neon-blue-rgb), 0.3);
+    line-height: 1.4;
+}
+
+.label-caracteristica {
+    background-color: rgba(0, 229, 255, 0.1);
+    color: var(--neon-blue);
+    font-weight: bold;
+    width: 40%;
+    border-right: 2px solid var(--neon-magenta);
+}
+
+.caracteristici-produs td[class^="val-"] {
+    background-color: rgba(255, 0, 255, 0.05);
+    color: var(--text-principal);
+}
+
+/* Imagine protocol */
+.imagine-produs {
+    grid-column: 2;
+    margin: 0;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+}
+
+.imagine-produs img {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 0.3rem;
+    border: 2px solid var(--neon-blue);
+    transition: all 0.3s ease;
+}
+
+.grid-produse .protocol:hover .imagine-produs img {
+    box-shadow: 0 0 15px rgba(var(--neon-blue-rgb), 0.5);
+    border-color: var(--neon-magenta);
+}
+
+/* Descriere */
+.descriere-produs {
+    color: var(--text-principal);
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin: 0 1.2rem 0.5rem 1.2rem;
+}
+
+/* Departament/Categorie */
+.categorie-produs {
+    text-align: center;
+    font-weight: bold;
+    color: var(--neon-magenta);
+    margin: 0.5rem 0 1rem 0;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+}
+
+.val-categorie {
+    color: var(--neon-blue);
+    background-color: rgba(0, 229, 255, 0.1);
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.2rem;
+}
+
+/* Clase departamente (pentru filtrare) */
+.protocol.Neural-Performance,
+.protocol.Neural_Performance {
+    --dept-color: #00d4ff;
+}
+
+.protocol.Biomechanical-Power,
+.protocol.Biomechanical_Power {
+    --dept-color: #ff00ff;
+}
+
+.protocol.Recovery-Protocols,
+.protocol.Recovery_Protocols {
+    --dept-color: #00ff88;
+}
+
+@media screen and (max-width: 1200px) {
+    .grid-produse {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .grid-produse {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    main label {
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+
+    main button {
+        display: block;
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    .container-produs {
+        grid-template-columns: 1fr;
+    }
+
+    .caracteristici-produs,
+    .imagine-produs {
+        grid-column: 1;
+    }
+
+    .imagine-produs img {
+        width: 150px;
+        height: 150px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .caracteristici-produs {
+        font-size: 0.8rem;
+    }
+
+    .container-produs {
+        padding: 0.75rem;
+    }
+
+    .imagine-produs img {
+        width: 130px;
+        height: 130px;
+    }
+}

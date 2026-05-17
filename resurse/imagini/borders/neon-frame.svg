@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" preserveAspectRatio="none">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1">
+      <stop offset="0" stop-color="#ff00ff"/>
+      <stop offset="1" stop-color="#00e5ff"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- transparent center, neon stroked rounded rectangle -->
+  <rect x="10" y="10" width="180" height="180" rx="18" ry="18"
+        fill="none"
+        stroke="url(#g)"
+        stroke-width="14"
+        stroke-linejoin="round"
+        stroke-linecap="round"
+        vector-effect="non-scaling-stroke"
+        filter="url(#glow)"/>
+</svg>

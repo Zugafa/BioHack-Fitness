@@ -29,7 +29,7 @@
                 </ul>
             </li>
 
-            <!-- PROTOCOLS -->
+            <!-- PROTOCOLS (sub-optiuni generate din BD) -->
             <li>
                 <input type="checkbox" id="sub-protocols" class="sub-toggle" />
                 <label for="sub-protocols">
@@ -38,10 +38,15 @@
                 </label>
                 <ul>
                     <li><a href="/protocols">Toate Protocoalele</a></li>
-                    <li><a href="/protocols?tip=baseline">Baseline — Human</a></li>
-                    <li><a href="/protocols?tip=enhanced">Enhanced — Augmented</a></li>
-                    <li><a href="/protocols?tip=biohacker">BioHacker — Apex</a></li>
-                    <li><a href="/protocols?tip=specimen">Specimen Zero</a></li>
+                    <% if (locals.prod_categories && locals.prod_categories.length) { %>
+                        <% for (let cat of locals.prod_categories) { %>
+                            <li><a href="/protocols?departament=<%- encodeURIComponent(cat) %>"><%- cat %></a></li>
+                        <% } %>
+                    <% } else { %>
+                        <li><a href="/protocols?departament=Biomechanical-\-Power">Biomechanical-Power</a></li>
+                        <li><a href="/protocols?departament=Neural-Performance">Neural-Performance</a></li>
+                        <li><a href="/protocols?departament=Recovery-Protocols">Recovery-Protocols</a></li>
+                    <% } %>
                 </ul>
             </li>
 
@@ -85,13 +90,13 @@
         </ul>
     </nav>
     <div class="ticker-container">
-    <div class="ticker-text">
-        <span>[STATUS: SYSTEM_ONLINE]</span>
-        <span>[NEURAL_SYNC: 98.4%]</span>
-        <span>[HEART_RATE: 145 BPM]</span>
-        <span>[ADRENALINE: STABLE]</span>
-        <span>[UPGRADE_PROTOCOL: IN_PROGRESS]</span>
-        <span>[LOCATION: SECTOR_ZERO]</span>
-        <span>[USER: <%= ip %>]</span> </div>
-</div>
+        <div class="ticker-text">
+            <span>[USER: <%= locals.ip || 'UNKNOWN' %>] </span>
+            <span>[STATUS: SYSTEM_ONLINE]</span>
+            <span>"Efortul este singura monedă acceptată în sistem." — Arhitectul Șef</span>
+            <span>"Durerea este doar un senzor defect. Ignoră avertismentul, atinge limita." — Echipa Cyber-Coaches</span>
+            <span>"ADN-ul tău este doar cod moștenit. Noi livrăm patch-ul de performanță." — Echipa Bio-Analysts</span>
+            <span>"Fiecare puls este o linie de cod. Fă-o să ruleze eficient." — Echipa Heart-Boosters</span>
+        </div>
+    </div>
 </header>

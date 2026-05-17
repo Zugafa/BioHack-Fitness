@@ -28,6 +28,7 @@ $border-radius-lg: 4px;
 $border-radius-sm: 0px;
 
 // Dimensiunea literelor headingurilor
+// rem = root element
 $h1-font-size: 3.5rem;
 $h2-font-size: 2.8rem;
 $display-font-sizes: (
@@ -35,7 +36,29 @@ $display-font-sizes: (
   2: 4.5rem
 );
 
-// Variabilă extra pentru max-width container, adaptată la design
+// Variabile pentru Butoane
+$btn-border-radius: 0.4rem;
+$btn-border-width: 2px;
+$btn-font-weight: 700;
+$btn-padding-y: 0.6rem;
+$btn-padding-x: 1.2rem;
+
+// Variabile pentru Inputuri
+$input-border-width: 2px;
+$input-border-radius: 0.3rem;
+$input-focus-border-color: #ff00ff;
+$input-focus-box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+
+// Variabile pentru Range Input (Bootstrap 5)
+$form-range-thumb-width: 1.5rem;                    // 50% mai mare decât font-size
+$form-range-thumb-height: 1.5rem;
+$form-range-thumb-bg: #00e5ff;                      // Neon Blue
+$form-range-thumb-border: 2px solid #ff00ff;       // Neon Magenta
+$form-range-track-bg: #1a1a1a;
+$form-range-track-height: 0.5rem;
+$form-range-thumb-active-bg: #ff00ff;
+
+// Variabile extra pentru max-width container, adaptată la design
 $container-max-widths: (
   sm: 540px,
   md: 820px,

@@ -30,39 +30,17 @@ $neon-black: #000000;
     margin: auto;
     z-index: 1;
 
-    // Rama
-    border: 2px solid $neon-black;
+    // Rama SVG, desenată în afara conținutului prin border-image-outset
+    border-radius: 18px;
+    border-image-source: url('/resurse/imagini/borders/neon-frame.svg');
+    border-image-slice: 30;
+    border-image-width: 16px;
+    border-image-outset: 12px;
+    border-image-repeat: stretch;
     box-shadow:
         0 0 10px rgba($neon-cyan, 0.5), // Glow exterior
         0 0 20px rgba($neon-cyan, 0.3), // Glow exterior difuz
         inset 0 0 15px rgba($neon-cyan, 0.4); // Glow interior peste imagine
-
-    // Colțurile neon
-    &::before,
-    &::after {
-        content: '';
-        position: absolute;
-        width: 40px; // Lungimea liniilor din colțuri
-        height: 40px;
-        pointer-events: none; // Asigură că nu blochează hover-ul
-        z-index: 10;
-    }
-
-    // Colț stânga-sus
-    &::before {
-        top: 0;
-        left: 0;
-        border-top: 4px solid $neon-cyan;
-        border-left: 4px solid $neon-magenta;
-    }
-
-    // Colț dreapta-jos
-    &::after {
-        bottom: 0;
-        right: 0;
-        border-bottom: 4px solid $neon-cyan;
-        border-right: 4px solid $neon-magenta;
-    }
 
     // Oprirea animației la hover
     &:hover .grid-animat {
@@ -78,6 +56,7 @@ $neon-black: #000000;
     top: 0;
     left: 0;
     transform-origin: 0 0;
+    z-index: 1;
 
     // Timp total: 2.5 s/img
     animation: miscare-complexa calc(#{$nr-imagini} * 2.5s) linear infinite alternate;
@@ -93,8 +72,8 @@ $neon-black: #000000;
 // eticheta cu numele imaginii
 .nume-imagine-galerie {
     position: absolute;
-    left:80%;
-    bottom: 8px;
+    left: 74%;
+    bottom: 26px;
     transform: translateX(-50%);
     margin: 0;
     padding: 5px 10px;
@@ -222,7 +201,7 @@ $path-rows: (
 }
 
 // Timpii pentru fiecare etapă a animației
-$w-pause: 1; // Pauză scurtă pe fiecare imagine
+$w-pause: 5; // Pauză scurtă pe fiecare imagine
 $w-rot: 6; // Rotație 360
 $w-trans: 35; // Translație pe o singură celulă
 
@@ -239,8 +218,11 @@ $t-total: 0;
         $col-urmator: list.nth($path-cols, $i + 1);
         $rand-urmator: list.nth($path-rows, $i + 1);
 
-        // Pentru salturile mai lungi (ex. col1 -> col3), durata creste proportional
-        $dist-celule: math.max(math.abs($col-urmator - $col-curent), math.abs($rand-urmator - $rand-curent));
+        // Salturile mai lungi durează mai mult, păstrând vizual aceeași viteză
+        $dist-celule: math.sqrt(
+            math.pow($col-urmator - $col-curent, 2) +
+            math.pow($rand-urmator - $rand-curent, 2)
+        );
         $t-total: $t-total + ($w-trans * $dist-celule);
     }
 }
@@ -253,29 +235,40 @@ $unghi-curent: 0deg;
     $col: list.nth($path-cols, $i);
     $rand: list.nth($path-rows, $i);
 
-    $vx: $w-img * 0.5;
-    $vy: $h-img * 0.5;
+    $vx: $w-img * 0.5; // Translația pentru a centra imaginea în celulă
+    $vy: $h-img * 0.5; // Translația pentru a centra imaginea în celulă
 
     $cx: (
-        $col * $w-img) + $vx;
+        $col * $w-img) + $vx; // Centrul imaginii în celula curentă
     $cy: (
-        $rand * $h-img) + $vy;
+        $rand * $h-img) + $vy; // Centrul imaginii în celula curentă
 
     // A. SOSIREA pe imagine
-    $pct-sosire: math.div($t-curent * 100, $t-total);
+    $pct-sosire: math.div($t-curent * 100, $t-total
+    );
 
-    #{$pct-sosire * 1%} {
-        transform: translate($vx, $vy) rotate($unghi-curent) translate(-$cx, -$cy
-        );
+#{$pct-sosire * 1%} {
+    transform: translate($vx, $vy) rotate($unghi-curent) translate(-$cx, -$cy );
+    // transform se face în 3 pași pentru a roti în jurul centrului imaginii:
+    // 1. translate($vx, $vy) - mutăm centrul imaginii la origine
+    // 2. rotate($unghi-curent) - rotim imaginea
+    // 3. translate(-$cx, -$cy) - mutăm înapoi la poziția originală
 }
 
 // B. PAUZA
 $t-curent: $t-curent + $w-pause;
 $pct-plecare: math.div($t-curent * 100, $t-total);
+ // Procentul la care începe plecarea de pe imagine 
 
 #{$pct-plecare * 1%} {
+// În timpul pauzei, imaginea rămâne fixă, dar poate fi rotită
+// transform se face in 3 pași pentru a roti în jurul centrului imaginii:
+// 1. translate($vx, $vy) - mutăm centrul imaginii la origine
+// 2. rotate($unghi-curent) - rotim imaginea
+// 3. translate(-$cx, -$cy) - mutăm înapoi la poziția originală
     transform: translate($vx, $vy) rotate($unghi-curent) translate(-$cx, -$cy);
 }
+
 
 // C. ROTAȚIA 360
 $t-curent: $t-curent + $w-rot;
@@ -290,7 +283,10 @@ $pct-rot: math.div($t-curent * 100, $t-total);
 @if $i < $nr-imagini {
     $col-urmator: list.nth($path-cols, $i + 1);
     $rand-urmator: list.nth($path-rows, $i + 1);
-    $dist-celule: math.max(math.abs($col-urmator - $col), math.abs($rand-urmator - $rand));
+    $dist-celule: math.sqrt(
+        math.pow($col-urmator - $col, 2) +
+        math.pow($rand-urmator - $rand, 2)
+    );
     $t-curent: $t-curent + ($w-trans * $dist-celule);
 }
 }

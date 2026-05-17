@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html  lang="ro">
+    <head>
+        <meta name="description" content="BioHack - Sala de fitness cu protocoale de antrenament și abonamente personalizate.">
+        <meta name="keywords" content="fitness, antrenament, abonament, sală de fitness, protocoale de antrenament">
+        <link rel="stylesheet" href="/resurse/css/protocols.css" type="text/css" />
+        <title>BioHack - Protocoale</title>
+        <%- include("../fragmente/head") %>     
+        <script type="text/javascript" src=/resurse/js/produse.js></script>
+
+    </head>
+    <body>
+
+    <%- include("../fragmente/header") %>
+
+    <main>
+        <h1 class="page-title">PROTOCOALE</h1>
+        
+        <!-- SECȚIUNE FILTRE -->
+        <section id="sectiune-filtre" class="filters-container mb-4">
+            <div class="container-fluid">
+                <h2 class="mb-4">Filtre</h2>
+                
+                <div class="row g-3 align-items-start">
+                    <!-- 1. Input Text: Nume -->
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <label for="inp-nume" class="form-label">Nume Protocol:</label>
+                        <input type="text" id="inp-nume" class="form-control" placeholder="Căutați...">
+                    </div>
+
+                    <!-- 2. Input Range: Durata -->
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <label for="inp-durata" class="form-label">Durata (zile):</label>
+                        <div class="d-flex gap-2 align-items-center">
+                            <span class="text-muted small"><%- durata_min %></span>
+                            <input type="range" id="inp-durata" class="form-range flex-grow-1" min="<%- durata_min %>" max="<%- durata_max %>" step="5" value="<%- durata_min %>">
+                            <span class="text-muted small"><%- durata_max %></span>
+                            <span id="infoRange" class="badge bg-info ms-2" style="white-space: nowrap;">(<%- durata_min %>)</span>
+                        </div>
+                    </div>
+
+                    <!-- 2b. Input Range: Preț -->
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <label for="inp-pret" class="form-label">Preț (RON):</label>
+                        <div class="d-flex gap-2 align-items-center">
+                            <span class="text-muted small"><%- pret_min %></span>
+                            <input type="range" id="inp-pret" class="form-range flex-grow-1" min="<%- pret_min %>" max="<%- pret_max %>" step="5" value="<%- pret_max %>">
+                            <span class="text-muted small"><%- pret_max %></span>
+                            <span id="infoRangePrice" class="badge bg-info ms-2" style="white-space: nowrap;">(<%- pret_max %>)</span>
+                        </div>
+                    </div>
+
+                    <!-- 3. Select Simplu: Departament -->
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <label for="inp-departament" class="form-label">Departament:</label>
+                        <select id="inp-departament" class="form-select">
+                            <option value="toate" selected>Oricare</option>
+                            <% for (let opt of locals.optiuni) { %>
+                                <option value="<%- opt.departament %>"><%- opt.departament %></option>
+                            <% } %>
+                        </select>
+                    </div>
+
+                    <!-- 4. Select Multiplu: Tehnologii -->
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <label for="inp-tehnologii" class="form-label">Tehnologii:</label>
+                        <select id="inp-tehnologii" class="form-select" multiple size="4">
+                            <%
+                                let tehnologiiSet = new Set();
+                                locals.protocoale.forEach(p => {
+                                    if (p.tehnologii_folosite) {
+                                        p.tehnologii_folosite.forEach(t => tehnologiiSet.add(t));
+                                    }
+                                });
+                                Array.from(tehnologiiSet).sort().forEach(tech => {
+                            %>
+                                <option value="<%- tech %>"><%- tech %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+
+                    <!-- 5. Radio Buttons: Necesita Analize -->
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <label class="form-label d-block mb-2">Necesita Analize:</label>
+                        <div class="btn-group" role="group">
+                            <input type="radio" class="btn-check" name="gr_analize" id="gr_analize_toate" value="toate" checked>
+                            <label class="btn btn-outline-primary" for="gr_analize_toate">
+                                <i class="bi bi-asterisk"></i> <span class="d-none d-sm-inline ms-1">Toate</span>
+                            </label>
+                            
+                            <input type="radio" class="btn-check" name="gr_analize" id="gr_analize_da" value="da">
+                            <label class="btn btn-outline-primary" for="gr_analize_da">
+                                <i class="bi bi-check-circle"></i> <span class="d-none d-sm-inline ms-1">Da</span>
+                            </label>
+                            
+                            <input type="radio" class="btn-check" name="gr_analize" id="gr_analize_nu" value="nu">
+                            <label class="btn btn-outline-primary" for="gr_analize_nu">
+                                <i class="bi bi-x-circle"></i> <span class="d-none d-sm-inline ms-1">Nu</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 6. Datalist: Sesiuni Antrenor -->
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <label for="inp-sesiuni" class="form-label">Sesiuni Antrenor (min):</label>
+                        <input type="number" id="inp-sesiuni" class="form-control" list="sesiuni-list" placeholder="0" min="0" max="100">
+                        <datalist id="sesiuni-list">
+                            <option value="0">0</option>
+                            <option value="2">2</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                        </datalist>
+                    </div>
+
+                    <!-- 7. Checkbox: Protocoale Recurente -->
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="form-check form-switch mt-3">
+                            <input class="form-check-input" type="checkbox" id="inp-recurent">
+                            <label class="form-check-label" for="inp-recurent">
+                                <i class="bi bi-arrow-repeat"></i> Doar recurente
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 8. Textarea: Descriere (Floating Label) -->
+                    <div class="col-12 col-md-8 col-lg-6">
+                        <div class="form-floating">
+                            <textarea id="inp-descriere" class="form-control" placeholder="Cuvinte cheie..." style="height: 100px;"></textarea>
+                            <label for="inp-descriere">Cuvinte cheie în descriere:</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Butoane -->
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="d-flex flex-wrap gap-2 justify-content-center">
+                            <button id="filtrare" class="btn btn-primary">
+                                <i class="bi bi-funnel"></i> <span class="d-none d-sm-inline ms-2">Filtreaza</span>
+                            </button>
+                            <button id="sortare-asc" class="btn btn-warning">
+                                <i class="bi bi-sort-up"></i> <span class="d-none d-sm-inline ms-2">Sortare ↑</span>
+                            </button>
+                            <button id="sortare-desc" class="btn btn-warning">
+                                <i class="bi bi-sort-down"></i> <span class="d-none d-sm-inline ms-2">Sortare ↓</span>
+                            </button>
+                            <button id="calculeaza" class="btn btn-info">
+                                <i class="bi bi-calculator"></i> <span class="d-none d-sm-inline ms-2">Calculeaza</span>
+                            </button>
+                            <button id="resetare" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-clockwise"></i> <span class="d-none d-sm-inline ms-2">Reseteaza</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+  
+        <section id="produse">
+            <p id="no-products-message" class="text-center fw-bold my-4" style="display:none;">Nu exista produse conform filtrarii curente.</p>
+            <div class="grid-produse">
+                <% for( let protocol of locals.protocoale) { %>
+                    <article class="protocol <%- protocol.departament.replace(/[- ]/g, '_') %>" id="elem_<%- protocol.id %>">
+                        <h3 class="nume-protocol"><%- protocol.nume %></h3>
+                        
+                        <div class="container-produs">
+                            <table class="caracteristici-produs">
+                                <tbody>
+                                    <tr>
+                                        <td class="label-caracteristica">Preț:</td>
+                                        <td class="val-pret"><%- protocol.pret !== null ? protocol.pret + " RON" : "La cerere" %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-caracteristica">Durata:</td>
+                                        <td class="val-durata"><%- protocol.durata_zile %> zile</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-caracteristica">Sesiuni antrenor:</td>
+                                        <td class="val-sesiuni"><%- protocol.sesiuni_antrenor %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-caracteristica">Tehnologii:</td>
+                                        <td class="val-tehnologii"><%- protocol.tehnologii_folosite.join(", ") %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-caracteristica">Data adăugare:</td>
+                                        <td class="val-data-adaugare">
+                                            <% 
+                                                const data = new Date(protocol.data_adaugare);
+                                                const zile = ['Duminică', 'Luni', 'Marți', 'Miercuri', 'Joi', 'Vineri', 'Sâmbătă'];
+                                                const luni = ['Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie', 'Iulie', 'August', 'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie'];
+                                                const ziuaSaptamanii = zile[data.getDay()];
+                                                const luna = luni[data.getMonth()];
+                                                const ziua = data.getDate();
+                                                const an = data.getFullYear();
+                                            %>
+                                            <time datetime="<%- data.toISOString() %>"><%- ziua %> <%- luna %> <%- an %> (<%- ziuaSaptamanii %>)</time>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-caracteristica">Recurent:</td>
+                                        <td class="val-recurent"><%- protocol.este_recurent ? "Da" : "Nu" %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-caracteristica">Necesita analize:</td>
+                                        <td class="val-analize"><%- protocol.necesita_analize ? "Da" : "Nu" %></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <figure class="imagine-produs">
+                                <a href="/protocols/<%-protocol.id %>" ><img src="/resurse/imagini/protocols/<%- protocol.imagine %>" alt="[imagine <%- protocol.nume %>]" /></a>
+                            </figure>
+                        </div>
+
+                        <p class="descriere-produs"><%- protocol.descriere %></p>
+                        
+                        <p class="categorie-produs">Departament: <span class="val-categorie"><%- protocol.departament %></span></p>
+                    </article>
+                <% }%>
+            </div>
+        </section>
+    </main>
+
+    <%- include("../fragmente/footer") %>
+    </body>
+</html>

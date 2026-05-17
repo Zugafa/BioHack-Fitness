@@ -1,4 +1,5 @@
 :root {
+    /* Tema Întunecată (Dark - default) */
     --culoare-fundal: #0a0a0a;
     --neon-blue: #00e5ff;
     --neon-magenta: #ff00ff;
@@ -32,7 +33,34 @@
     --culoare-link-vizitat: var(--neon-magenta);
     --culoare-link-ext-hover: var(--neon-blue);
     --culoare-pata-link: rgba(var(--neon-blue-rgb), 0.35);
+}
 
+/* Tema Luminoasă (Light) */
+html.light-theme {
+    --culoare-fundal: #f5f5f5;
+    --neon-blue: #0080b3;
+    --neon-magenta: #cc0099;
+    --text-principal: #1a1a1a;
+    --text-glow: 0 0 8px var(--neon-blue);
+    --neon-blue-rgb: 0, 128, 179;
+    --neon-magenta-rgb: 204, 0, 153;
+    --culoare-fundal-rgb: 245, 245, 245;
+    --bg-header: #e8e8e8;
+    --teal-inchis: #b3e5e6;
+    --culoare-nav-bara: var(--neon-blue);
+    --culoare-item-fundal: var(--culoare-fundal);
+    --culoare-item-hover: var(--neon-magenta);
+    --culoare-submeniu-top: var(--neon-magenta);
+    --culoare-jack-border: var(--neon-magenta);
+    --culoare-jack-hover: var(--neon-magenta);
+    --culoare-text-submeniu: var(--text-principal);
+    --shadow-nav: 0 0 15px rgba(var(--neon-blue-rgb), 0.3);
+    --shadow-submeniu: 0 8px 24px rgba(255, 255, 255, 0.5), 0 0 12px rgba(var(--neon-blue-rgb), 0.2);
+    --shadow-jack-hover: 0 0 15px rgba(var(--neon-magenta-rgb), 0.3);
+    --culoare-link: var(--neon-blue);
+    --culoare-link-vizitat: var(--neon-magenta);
+    --culoare-link-ext-hover: var(--neon-blue);
+    --culoare-pata-link: rgba(var(--neon-blue-rgb), 0.15);
 }
 
 body {
@@ -179,6 +207,8 @@ footer {
 }
 
 header {
+    position: relative;
+    z-index: 20;
     background-color: var(--bg-header);
     border: 2px solid var(--neon-magenta);
     border-top: none;
@@ -786,6 +816,119 @@ footer address a:link {
     text-shadow: var(--text-glow);
 }
 
+/* TEMA NEON - 3a tema */
+html.neon-theme {
+    --culoare-fundal: #0a0a15;
+    --neon-blue: #00f7ff;
+    --neon-magenta: #ff00ff;
+    --neon-lime: #00ff00;
+    --text-principal: #00f7ff;
+    --text-secundar: #ff00ff;
+    --culoare-nav-bara: #00f7ff;
+    --culoare-item-fundal: #0a0a15;
+    --culoare-item-hover: #ff00ff;
+    --culoare-hover-sus: #00f7ff;
+    --culoare-hover-jos: #ff00ff;
+    --culoare-submeniu-top: #ff00ff;
+    --culoare-jack-border: #ff00ff;
+    --culoare-jack-hover: #ff00ff;
+    --culoare-text-submeniu: #00f7ff;
+    --culoare-bara-sus: #00f7ff;
+    --culoare-bara-jos: #ff00ff;
+    --teal-inchis: #001a1f;
+    --culoare-nav-deschis: rgba(0, 247, 255, 0.1);
+    --culoare-border-input: #00f7ff;
+    --culoare-placeholder: #00f7ff;
+    --culoare-text-negru: #00f7ff;
+    --culoare-text-alb: #ffffff;
+    --culoare-item-header: #ff00ff;
+    --text-glow: 0 0 10px #00f7ff, 0 0 20px #ff00ff;
+    --shadow-jack-hover: 0 0 20px rgba(0, 247, 255, 0.8), 0 0 30px rgba(255, 0, 255, 0.6);
+}
+
+html.neon-theme body {
+    background-color: #0a0a15;
+    color: #00f7ff;
+    text-shadow: 0 0 5px rgba(0, 247, 255, 0.3);
+}
+
+html.neon-theme a {
+    color: #00f7ff;
+    transition: all 0.3s ease;
+}
+
+html.neon-theme a:hover {
+    color: #ff00ff;
+    text-shadow: 0 0 10px #ff00ff;
+}
+
+html.neon-theme input, 
+html.neon-theme textarea, 
+html.neon-theme select {
+    background-color: #0a0a15;
+    border-color: #00f7ff !important;
+    color: #00f7ff;
+}
+
+html.neon-theme input::placeholder,
+html.neon-theme textarea::placeholder {
+    color: #00f7ff;
+    opacity: 0.6;
+}
+
+html.neon-theme button {
+    border-color: #00f7ff !important;
+    color: #00f7ff;
+    transition: all 0.3s ease;
+}
+
+html.neon-theme button:hover {
+    background-color: #ff00ff;
+    color: #0a0a15;
+    box-shadow: 0 0 20px #ff00ff;
+}
+#theme-toggle.theme-toggle-floating {
+    position: fixed;
+    bottom: 6.5em;
+    right: 1em;
+    width: 3.5rem;
+    height: 3.5rem;
+    opacity: 0.5;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+#theme-toggle.theme-toggle-floating:hover {
+    opacity: 1;
+}
+
+#cerc-tema {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 3px dashed var(--neon-blue);
+    background: linear-gradient(135deg, var(--culoare-fundal), var(--teal-inchis), var(--culoare-fundal));
+    box-sizing: border-box;
+    transition: transform 0.5s ease;
+}
+
+#theme-toggle.theme-toggle-floating:hover #cerc-tema {
+    transform: rotate(-90deg);
+}
+
+#theme-toggle.theme-toggle-floating i {
+    position: relative;
+    z-index: 1;
+    color: var(--neon-magenta);
+    font-size: 1.3rem;
+    line-height: 1;
+    text-shadow: var(--text-glow);
+}
+
 .sectiune-galerie-animata {
     grid-area: sectiune-galerie-animata;
     display: block;
@@ -944,7 +1087,7 @@ footer address a:link {
 .duotone-box:hover {
     filter: grayscale(100%);
     border-color: #ff00ff;
-    /* Schimbă bordura în magenta la hover */
+    /* Schimbă culoarea din magenta în gri la hover */
 }
 
 /* Dezactivarea straturilor de culoare la hover */
@@ -980,7 +1123,7 @@ footer address a:link {
     /* Textul rămâne la 80% opacitate până la jumătate (50%), apoi scade spre 20% */
     mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.8) 50%, rgba(0, 0, 0, 0.2) 100%);
     -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.8) 50%, rgba(0, 0, 0, 0.2) 100%);
-    opacity: .7;
+    opacity: .7; 
     transition: color 0.5s ease;
 }
 
@@ -999,7 +1142,7 @@ footer address a:link {
     }
 }
 
-/* Pentru browsere moderne */
+/* Pentru majoritatea browserelor */
 ::selection {
     background-color: var(--neon-magenta, #ff00ff); /* Fundal magenta */
     color: #000000; /* Text negru pentru contrast */
@@ -1018,10 +1161,10 @@ footer address a:link {
     background-color: rgba(0, 0, 0, 0.8);
     border-bottom: 1px solid var(--neon-blue);
     overflow: hidden; /* oprește apariția scrollbar-ului */
-    white-space: nowrap;
-    padding: 5px 0;
+    white-space: nowrap; /* împiedică textul să se rupă pe linii noi */
+    padding: 5px 0; 
     font-family: 'Share Tech Mono', monospace;
-    font-size: 0.9rem;
+    font-size: 0.9rem; /* rem = unitate relativă la dimensiunea fontului rădăcină */
     color: var(--neon-blue);
     text-shadow: 0 0 5px var(--neon-blue);
 }
@@ -1029,11 +1172,11 @@ footer address a:link {
 .ticker-text {
     display: inline-block;
     padding-left: 100%; /* Mesajul începe din afara ecranului (dreapta) */
-    animation: marquee-horizontal 20s linear infinite;
+    animation: marquee-horizontal 35s linear infinite;
 }
 
 .ticker-text span {
-    margin-right: 50px; /* Spațiu între mesaje */
+    margin-right: 60px; /* Spațiu între mesaje */
 }
 
 /* Animația recurentă */
@@ -1054,7 +1197,7 @@ footer address a:link {
 
 .parallax-section {
     position: relative;
-    min-height: 80vh;
+    min-height: 80vh; /* vh = unitate relativă la înălțimea viewportului */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1089,6 +1232,13 @@ footer address a:link {
     pointer-events: none;
 }
 
+@keyframes scanLine {
+    0% { top: 0%; opacity: 0; }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.6; }
+    100% { top: 100%; opacity: 0; }
+}
+
 .parallax-content {
     background: rgba(10, 10, 10, 0.7);
     backdrop-filter: blur(12px); /* Blur de fundal */
@@ -1102,24 +1252,18 @@ footer address a:link {
     z-index: 5;
 }
 
-.text-coloane {
-    position: relative;
-    column-count: 2;
-    column-gap: 50px;
-    column-rule: 1px solid var(--neon-blue);
-    text-align: justify;
-}
 /* schimbare imagini de bg */
 @keyframes slideShow {
     0%, 45% { background-image: url('/resurse/imagini/bg_parallax_1.png'); }
     55%, 100% { background-image: url('/resurse/imagini/bg_parallax_2.png'); }
 }
 
-@keyframes scanLine {
-    0% { top: 0%; opacity: 0; }
-    10% { opacity: 0.6; }
-    90% { opacity: 0.6; }
-    100% { top: 100%; opacity: 0; }
+.text-coloane {
+    position: relative;
+    column-count: 2;
+    column-gap: 50px;
+    column-rule: 1px solid var(--neon-blue);
+    text-align: justify;
 }
 
 /* responsivitate pentru ecrane mici */
@@ -1254,7 +1398,7 @@ footer address a:link {
         transparent 4px          /* Ciclu repetat la fiecare 4px */
     );
     
-    /* Glow discret pentru linii */
+    /* Glow pentru linii */
     filter: drop-shadow(0 0 3px var(--neon-blue));
     /* 0 0 3px => umbră difuză de 3px, fără deplasare (0 0) */ 
     opacity: 0.7;

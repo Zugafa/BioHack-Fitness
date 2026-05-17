@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html  lang="ro">
+    <head>
+        <meta name="description" content="BioHack Fitness - Sala de fitness cu protocoale de antrenament personalizate.">
+        <meta name="keywords" content="fitness, antrenament, abonament, sală de fitness, <%- locals.prod.nume %>">
+        
+        <title>BioHack - <%- locals.prod.nume %></title>
+        <%- include("../fragmente/head") %>     
+        <link href="/resurse/css/protocol.css" type="text/css" rel="stylesheet" />
+    </head>
+
+        <%- include("../fragmente/header") %>
+    <main>
+        <section>
+            <h2>Detalii Protocol</h2>
+                <article id="elem_<%- locals.prod.id %>" class="protocol <%- locals.prod.departament.replace(/[- ]/g, '_') %>">
+                    <h3 class="nume-protocol"><%- locals.prod.nume %></h3>
+                    
+                    <div class="container-produs">
+                        <table class="caracteristici-produs">
+                            <tbody>
+                                <tr>
+                                    <td class="label-caracteristica">Preț:</td>
+                                    <td class="val-pret"><%- locals.prod.pret !== null ? locals.prod.pret + " RON" : "La cerere" %></td>
+                                </tr>
+                                <tr>
+                                    <td class="label-caracteristica">Durata:</td>
+                                    <td class="val-durata"><%- locals.prod.durata_zile %> zile</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-caracteristica">Sesiuni antrenor:</td>
+                                    <td class="val-sesiuni"><%- locals.prod.sesiuni_antrenor %></td>
+                                </tr>
+                                <tr>
+                                    <td class="label-caracteristica">Reducere maxima:</td>
+                                    <td class="val-reducere"><%- locals.prod.reducere_maxima %>%</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-caracteristica">Departament:</td>
+                                    <td class="val-departament"><%- locals.prod.departament %></td>
+                                </tr>
+                                <tr>
+                                    <td class="label-caracteristica">Frecventa plată:</td>
+                                    <td class="val-frecventa"><%- locals.prod.frecventa_plata %></td>
+                                </tr>
+                                <tr>
+                                    <td class="label-caracteristica">Nivel subiect:</td>
+                                    <td class="val-nivel"><%- locals.prod.nivel_subiect %></td>
+                                </tr>
+                                <tr>
+                                    <td class="label-caracteristica">Tip abonament:</td>
+                                    <td class="val-tip"><%- locals.prod.tip_abonament %></td>
+                                </tr>
+                                <tr>
+                                    <td class="label-caracteristica">Tehnologii:</td>
+                                    <td class="val-tehnologii"><%- locals.prod.tehnologii_folosite.join(", ") %></td>
+                                </tr>
+                                <tr>
+                                    <td class="label-caracteristica">Data adăugare:</td>
+                                    <td class="val-data-adaugare">
+                                        <% 
+                                            const data = new Date(locals.prod.data_adaugare);
+                                            const zile = ['Duminică', 'Luni', 'Marți', 'Miercuri', 'Joi', 'Vineri', 'Sâmbătă'];
+                                            const luni = ['Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie', 'Iulie', 'August', 'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie'];
+                                            const ziuaSaptamanii = zile[data.getDay()];
+                                            const luna = luni[data.getMonth()];
+                                            const ziua = data.getDate();
+                                            const an = data.getFullYear();
+                                        %>
+                                        <time datetime="<%- data.toISOString() %>"><%- ziua %> <%- luna %> <%- an %> (<%- ziuaSaptamanii %>)</time>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label-caracteristica">Recurent:</td>
+                                    <td class="val-recurent"><%- locals.prod.este_recurent ? "Da" : "Nu" %></td>
+                                </tr>
+                                <tr>
+                                    <td class="label-caracteristica">Necesita analize:</td>
+                                    <td class="val-analize"><%- locals.prod.necesita_analize ? "Da" : "Nu" %></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <figure class="imagine-produs">
+                            <img src="/resurse/imagini/protocols/<%- locals.prod.imagine %>" alt="[imagine <%- locals.prod.nume %>]" />
+                        </figure>
+                    </div>
+
+                    <p class="descriere-produs"><%- locals.prod.descriere %></p>
+                    <p class="categorie-produs">Departament: <span class="val-categorie"><%- locals.prod.departament %></span></p>
+                </article>
+            
+        </section>
+    </main>
+
+    <%- include("../fragmente/footer") %>
+    </body>
+</html>
